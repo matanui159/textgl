@@ -8,9 +8,13 @@ typedef enum heap_state_t {
 } heap_state_t;
 
 static inline heap_state_t* heap_get(tgl_heap_t* heap, GLuint name, void** obj) {
-	heap_state_t* state = tgl_array_get(&heap->array, name);
+	_Bool resize = 0;
 	if (name >= (GLuint)heap->array.size) {
-		tgl_array_resize(&heap->array, name);
+		tgl_array_resize(&heap->array, name + 1);
+		resize = 1;
+	}
+	heap_state_t* state = tgl_array_get(&heap->array, name);
+	if (resize) {
 		*state = HEAP_UNUSED;
 	}
 	
