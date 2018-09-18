@@ -1,0 +1,6 @@
+include config.tup
+
+SRC += src/*.c
+
+: foreach $(SRC) |> !CC |> bin/obj/%B.o {OBJ}
+: {OBJ} |> !LD -shared |> bin/tgl$(LIB_EXT)
