@@ -28,6 +28,13 @@ void tgl_heap_create(tgl_heap_t* heap, GLsizeiptr elem_size,
 }
 
 void tgl_heap_destroy(tgl_heap_t* heap) {
+	for (GLintptr i = 0; i < heap->array.size; ++i) {
+		void* obj;
+		heap_state_t* state = heap_get(heap, i, &obj);
+		if (*state == HEAP_CREATED) {
+			heap->destroy(obj);
+		}
+	}
 	tgl_array_destroy(&heap->array);
 }
 

@@ -31,6 +31,10 @@ void tgl_buffer_init() {
 	g_elements = NULL;
 }
 
+void tgl_buffer_exit() {
+	tgl_heap_destroy(&g_heap);
+}
+
 tgl_buffer_t* tgl_buffer_get(GLenum target, _Bool zero) {
 	switch (target) {
 		case GL_ARRAY_BUFFER:

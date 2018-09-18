@@ -9,6 +9,7 @@ typedef struct tgl_buffer_t {
 } tgl_buffer_t;
 
 void tgl_buffer_init();
+void tgl_buffer_exit();
 tgl_buffer_t* tgl_buffer_get(GLenum target, _Bool zero);
 
 #endif

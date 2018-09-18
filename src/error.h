@@ -3,6 +3,7 @@
 #include <GLES2/gl2.h>
 
 void tgl_error_init();
+void tgl_error_exit();
 void tgl_error_set(GLenum error);
 
 #endif
