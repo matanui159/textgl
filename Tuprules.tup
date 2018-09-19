@@ -1,0 +1,4 @@
+.gitignore
+include config.tup
+
+CC_FLAGS += -Iinc

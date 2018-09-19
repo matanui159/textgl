@@ -1,12 +1,4 @@
-.gitignore
-include config.tup
+include_rules
 
-CC_FLAGS += -Iinc
-
-: foreach src/*.c |> !CC |> $(OBJ)/%B.o {OBJ}
-: {OBJ} |> !LD -shared |> $(BIN)/libtgl$(LIB_EXT) {LIB}
-
-LD_FLAGS += -Lbin -ltgl
-
-: foreach test/*.c |> !CC |> $(OBJ)/test/%B.o {TEST_OBJ}
-: {TEST_OBJ} | {LIB} |> !LD |> $(BIN)/test$(BIN_EXT)
+: foreach src/*.c |> !CC |> bin/%B.o {OBJ}
+: {OBJ} |> !LD -shared |> libtgl$(LIB_EXT) {LIB}

@@ -1,0 +1,9 @@
+DE_ROOT = $(TUP_CWD)/delibs
+
+DE_INC += -I$(DE_ROOT)/debase
+DE_INC += -I$(DE_ROOT)/decpp
+DE_INC += -I$(DE_ROOT)/deimage
+DE_INC += -I$(DE_ROOT)/depool
+DE_INC += -I$(DE_ROOT)/destream
+DE_INC += -I$(DE_ROOT)/dethread
+DE_INC += -I$(DE_ROOT)/deutil

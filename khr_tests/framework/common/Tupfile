@@ -1,0 +1,7 @@
+include_rules
+
+CC_FLAGS += $(DE_INC)
+CC_FLAGS += -I. -I../qphelper -I../referencerenderer
+
+: foreach *.cpp |> !CC |> bin/%B.o {OBJ}
+: {OBJ} |> !AR |> libtcu.a
