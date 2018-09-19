@@ -1,0 +1,6 @@
+include_rules
+
+: foreach *.cpp |> !CC |> bin/%B.o {OBJ}
+: foreach simplereference/*.cpp |> !CC |> bin/simplereference/%B.o {OBJ}
+: foreach wrapper/*.cpp |> !CC |> bin/wrapper/%B.o {OBJ}
+: {OBJ} |> !AR |> opengl.a

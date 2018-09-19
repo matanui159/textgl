@@ -1,6 +1,4 @@
 include_rules
 
-CC_FLAGS += $(DE_INC)
-
 : foreach *.c |> !CC |> bin/%B.o {OBJ}
-: {OBJ} |> !AR |> libqp.a
+: {OBJ} |> !AR |> qphelper.a

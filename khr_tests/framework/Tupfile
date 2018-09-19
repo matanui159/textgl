@@ -1,0 +1,10 @@
+include_rules
+
+LIBS += common/common.a
+LIBS += delibs/delibs.a
+LIBS += opengl/opengl.a
+LIBS += qphelper/qphelper.a
+LIBS += randomshaders/randomshaders.a
+LIBS += referencerenderer/referencerenderer.a
+
+: $(LIBS) |> !AR |> framework.a

@@ -61,5 +61,6 @@ int main (int argc, char** argv)
 		tcu::die("%s", e.what());
 	}
 
+	getchar();
 	return 0;
 }

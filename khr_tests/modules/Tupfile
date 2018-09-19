@@ -1,0 +1,7 @@
+include_rules
+
+LIBS += gles2/gles2.a
+LIBS += glshared/glshared.a
+LIBS += $(FW_ROOT)/framework.a
+
+: $(LIBS) | $(FW_ROOT)/framework.a |> !LD |> gles2$(BIN_EXT)

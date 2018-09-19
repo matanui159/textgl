@@ -20,5 +20,5 @@ else
 endif
 
 !CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |>
-!AR = |> ^ AR %o^ gcc-ar rc %o %f |>
-!LD = |> ^ LD %o^ gcc %f -o %o $(LD_FLAGS) |>
+!AR = |> ^ AR %o^ gcc-ar rcT %o %f |>
+!LD = |> ^ LD %o^ g++ %f -o %o $(LD_FLAGS) |>

@@ -1,0 +1,22 @@
+FW_ROOT = $(TUP_CWD)/framework
+DE_ROOT = $(FW_ROOT)/delibs
+
+CC_FLAGS += -I$(DE_ROOT)/debase
+CC_FLAGS += -I$(DE_ROOT)/decpp
+CC_FLAGS += -I$(DE_ROOT)/deimage
+CC_FLAGS += -I$(DE_ROOT)/depool
+CC_FLAGS += -I$(DE_ROOT)/destream
+CC_FLAGS += -I$(DE_ROOT)/dethread
+CC_FLAGS += -I$(DE_ROOT)/deutil
+
+GL_ROOT = $(FW_ROOT)/opengl
+
+CC_FLAGS += -I$(GL_ROOT)
+CC_FLAGS += -I$(GL_ROOT)/simplereference
+CC_FLAGS += -I$(GL_ROOT)/wrapper
+
+CC_FLAGS += -I$(FW_ROOT)/common
+CC_FLAGS += -I$(FW_ROOT)/platform
+CC_FLAGS += -I$(FW_ROOT)/qphelper
+CC_FLAGS += -I$(FW_ROOT)/randomshaders
+CC_FLAGS += -I$(FW_ROOT)/referencerenderer

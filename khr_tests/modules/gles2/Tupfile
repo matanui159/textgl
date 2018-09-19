@@ -1,0 +1,8 @@
+include_rules
+
+: foreach *.cpp |> !CC |> bin/%B.o {OBJ}
+: foreach accuracy/*.cpp |> !CC |> bin/accuracy/%B.o {OBJ}
+: foreach functional/*.cpp |> !CC |> bin/functional/%B.o {OBJ}
+: foreach performance/*.cpp |> !CC |> bin/performance/%B.o {OBJ}
+: foreach stress/*.cpp |> !CC |> bin/stress/%B.o {OBJ}
+: {OBJ} |> !AR |> gles2.a
