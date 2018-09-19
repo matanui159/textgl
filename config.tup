@@ -21,3 +21,6 @@ endif
 
 !CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |>
 !LD = |> ^ LD %o^ gcc %f -o %o $(LD_FLAGS) |>
+
+BIN = bin
+OBJ = $(BIN)/obj

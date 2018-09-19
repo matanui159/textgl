@@ -43,7 +43,7 @@ tgl_buffer_t* tgl_buffer_get(GLenum target, _Bool zero) {
 			}
 			return g_array;
 		case GL_ELEMENT_ARRAY_BUFFER:
-			if (g_array == NULL && !zero) {
+			if (g_elements == NULL && !zero) {
 				tgl_error_set(GL_INVALID_OPERATION);
 			}
 			return g_elements;
@@ -120,6 +120,7 @@ GL_APICALL void GL_APIENTRY glBufferData(GLenum target, GLsizeiptr size,
 			return;
 	}
 
+	buffer->usage = usage;
 	tgl_array_resize(&buffer->array, size);
 	if (data != NULL) {
 		memcpy(buffer->array.data, data, size);
@@ -132,7 +133,7 @@ GL_APICALL void GL_APIENTRY glBufferSubData(GLenum target, GLintptr offset,
 	if (buffer == NULL) {
 		return;
 	}
-	if (offset < 0 || size < 0 || offset + size >= buffer->array.size) {
+	if (offset < 0 || size < 0 || offset + size > buffer->array.size) {
 		tgl_error_set(GL_INVALID_VALUE);
 		return;
 	}

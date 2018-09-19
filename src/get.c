@@ -12,6 +12,8 @@ GL_APICALL const GLubyte* GL_APIENTRY glGetString(GLenum name) {
 		case GL_SHADING_LANGUAGE_VERSION:
 			// TODO: check if glslang has its own version string
 			return (GLubyte*)"OpenGL ES GLSL ES 1.00 glslang";
+		case GL_EXTENSIONS:
+			return (GLubyte*)"";
 		default:
 			tgl_error_set(GL_INVALID_ENUM);
 			return NULL;

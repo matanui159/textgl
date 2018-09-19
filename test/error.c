@@ -3,9 +3,9 @@
 
 static void test_glGetError() {
 	TEST_FUNC(glGetError);
-
-	TEST_CHECK(glGetError() == GL_NO_ERROR);
 	
+	TEST_CHECK(glGetError() == GL_NO_ERROR);
+
 	glGenBuffers(-1, NULL);
 	TEST_CHECK(glGetError() == GL_INVALID_VALUE);
 	TEST_CHECK(glGetError() == GL_NO_ERROR);

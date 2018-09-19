@@ -2,7 +2,8 @@
 #define TEST_H_
 #include <stdio.h>
 
-extern _Bool g_test_fail;
+extern int g_test_pass;
+extern int g_test_fail;
 
 #define TEST__STRING(value) #value
 #define TEST_STRING(value) TEST__STRING(value)
@@ -10,9 +11,11 @@ extern _Bool g_test_fail;
 
 #define TEST_GROUP(name) puts(#name " (" __FILE__ "):")
 #define TEST_FUNC(name) puts(" - " #name)
-#define TEST_CHECK(expr) if (!(expr)) {\
-	puts("  ! " #expr " (" TEST_LINE ") failed"); \
-	g_test_fail = 1; \
+#define TEST_CHECK(expr) if (expr) {\
+	++g_test_pass; \
+} else { \
+	puts("  ! " #expr " (line " TEST_LINE ") failed"); \
+	++g_test_fail; \
 }
 
 #endif

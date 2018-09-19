@@ -97,7 +97,7 @@ void* tgl_heap_get(tgl_heap_t* heap, GLuint name) {
 
 _Bool tgl_heap_is(tgl_heap_t* heap, GLuint name) {
 	if (name == 0) {
-		return 1;
+		return 0;
 	}
 
 	heap_state_t* state = heap_get(heap, name, NULL);

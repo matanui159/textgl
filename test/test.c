@@ -5,7 +5,8 @@ void test_group_error();
 void test_group_buffer();
 void test_group_get();
 
-_Bool g_test_fail = 0;
+int g_test_pass = 0;
+int g_test_fail = 0;
 
 int main() {
 	tgl_context_init();
@@ -15,8 +16,6 @@ int main() {
 	test_group_get();
 
 	tgl_context_exit();
-	if (!g_test_fail) {
-		puts("* All tests passed");
-	}
-	for (;;);
+	printf("RESULTS:\n - PASS: %i\n - FAIL: %i\n", g_test_pass, g_test_fail);
+	getchar();
 }
