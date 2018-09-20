@@ -10,8 +10,8 @@
 			"request": "launch",
 			"MIMode": "gdb",
 			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/khr_tests/modules/gles2",
-			"cwd": "${workspaceFolder}/khr_tests",
+			"program": "${workspaceRoot}/???",
+			"cwd": "${workspaceFolder}",
 			"externalConsole": true,
 			"preLaunchTask": "tup",
 			"windows": {

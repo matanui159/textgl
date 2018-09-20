@@ -1,9 +1,0 @@
-ES_ROOT = $(TUP_CWD)/gles2
-
-CC_FLAGS += -I$(ES_ROOT)
-CC_FLAGS += -I$(ES_ROOT)/accuracy
-CC_FLAGS += -I$(ES_ROOT)/functional
-CC_FLAGS += -I$(ES_ROOT)/performance
-CC_FLAGS += -I$(ES_ROOT)/stress
-
-CC_FLAGS += -I$(TUP_CWD)/glshared

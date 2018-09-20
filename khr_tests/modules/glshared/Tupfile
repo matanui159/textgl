@@ -1,4 +1,0 @@
-include_rules
-
-: foreach *.cpp |> !CC |> bin/%B.o {OBJ}
-: {OBJ} |> !AR |> glshared.a

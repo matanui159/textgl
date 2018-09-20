@@ -1,4 +1,0 @@
-include_rules
-
-: foreach *.c |> !CC |> bin/%B.o {OBJ}
-: {OBJ} |> !AR |> qphelper.a

@@ -1,5 +1,0 @@
-include_rules
-
-: foreach *.cpp |> !CC |> bin/%B.o {OBJ}
-: foreach vanilla/*.cpp |> !CC |> bin/native/%B.o {OBJ}
-: {OBJ} |> !AR |> platform.a
