@@ -5,13 +5,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(gdb) Launch",
+			"name": "GLES2",
 			"type": "cppdbg",
 			"request": "launch",
 			"MIMode": "gdb",
 			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/bin/test",
-			"cwd": "${workspaceFolder}",
+			"program": "${workspaceRoot}/khr_tests/modules/gles2",
+			"cwd": "${workspaceFolder}/khr_tests",
 			"externalConsole": true,
 			"preLaunchTask": "tup",
 			"windows": {
