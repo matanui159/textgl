@@ -19,6 +19,7 @@ void tgl_array_resize(tgl_array_t* array, GLsizeiptr size) {
 		if (size > array->cap) {
 			array->cap = size;
 		}
+		
 		array->data = realloc(array->data, array->cap * array->elem_size);
 		if (array->data == NULL) {
 			tgl_error_set(GL_OUT_OF_MEMORY);

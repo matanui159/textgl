@@ -1,51 +1,41 @@
 #ifndef TEST_H_
 #define TEST_H_
-#include <GLES2/gl2.h>
 #include <tgl.h>
 #include <stdio.h>
 
-#define TEST_(name) test_##name()
+extern int g_test_pass;
+extern int g_test_fail;
 
-#define TEST__BEGIN(name) \
-_Bool __attribute__((constructor)) TEST_(name) { \
-	static int _tstate = -1; \
-	const char _tname[] = #name; \
-	if (_tstate == -1) { \
-		do
-
-#define TEST_END \
-		while (0); \
-		printf("%s (%s)\n", _tname, __FILE__); \
-		_tstate = 1; \
-		tglTerminate(); \
-	} \
-	return _tstate; \
-}
-
-#define TEST_READY tglInitialize()
-
-#define TEST__CHECK(cond, desc) do { \
-	if (!(cond)) { \
-		printf("%s (%s) %s (line %i)\n", _tname, __FILE__, \
-			desc, __LINE__); \
-		_tstate = 0; \
-		tglTerminate(); \
-		return _tstate; \
-	} \
-} while (0)
-
-#define TEST_CHECK(cond) TEST__CHECK(cond, "!C " #cond)
-#define TEST_ERROR(error) TEST__CHECK(glGetError() == error, "!E " #error)
-
-#define TEST_IMPORT(name) _Bool TEST_(name)
-#define TEST_REQUIRE(name) TEST__CHECK(TEST_(name), "!R " #name)
-
-TEST_IMPORT(glGetError);
+#define TEST__STRING(value) #value
+#define TEST_STRING(value) TEST__STRING(value)
+#define TEST_LINE TEST_STRING(__LINE__)
 
 #define TEST_BEGIN(name) \
-	TEST__BEGIN(name) { \
-	} while (0); \
-	TEST_REQUIRE(glGetError); \
+static void __attribute__((constructor)) test_##name() { \
+	puts("\n- " #name " (" __FILE__ ")"); \
+	tgl_init(); \
 	do
+
+#define TEST_END \
+	while (0); \
+	tgl_exit(); \
+}
+
+#define TEST__CHECK(cond, desc) do { \
+	if (cond) {\
+		++g_test_pass; \
+		printf(" * "); \
+	} else { \
+		++g_test_fail; \
+		printf(" ! "); \
+	} \
+	puts(desc " (line " TEST_LINE ")"); \
+} while (0)
+
+#define TEST_CHECK(cond) TEST__CHECK(cond, #cond)
+#define TEST_ERROR(error) TEST__CHECK( \
+	glGetError() == error, \
+	"glGetError() == " #error \
+)
 
 #endif
