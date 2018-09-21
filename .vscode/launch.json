@@ -10,7 +10,7 @@
 			"request": "launch",
 			"MIMode": "gdb",
 			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/tests",
+			"program": "${workspaceRoot}/test",
 			"cwd": "${workspaceFolder}",
 			"externalConsole": true,
 			"preLaunchTask": "tup",

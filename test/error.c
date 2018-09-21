@@ -1,0 +1,11 @@
+#include "test.h"
+
+TEST__BEGIN(glGetError) {
+	TEST_READY;
+
+	TEST_ERROR(GL_NO_ERROR);
+
+	glGenBuffers(-1, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+	TEST_ERROR(GL_NO_ERROR);
+} TEST_END;

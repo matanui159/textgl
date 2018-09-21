@@ -7,7 +7,7 @@ typedef enum heap_state_t {
 	HEAP_CREATED
 } heap_state_t;
 
-static inline heap_state_t* heap_get(tgl_heap_t* heap, GLuint name, void** obj) {
+static heap_state_t* heap_get(tgl_heap_t* heap, GLuint name, void** obj) {
 	_Bool resize = 0;
 	if (name >= (GLuint)heap->array.size) {
 		tgl_array_resize(&heap->array, name + 1);
