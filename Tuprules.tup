@@ -12,6 +12,7 @@ ifeq ($(WIN32),y)
 endif
 
 CC_FLAGS += -Wall -Wextra
+CC_FLAGS += -I$(TUP_CWD)/inc
 ifeq ($(DEBUG),y)
 	CC_FLAGS += -g
 else

@@ -1,0 +1,6 @@
+include_rules
+
+LD_FLAGS += -L../tgl -ltgl
+
+: foreach *.c  |> !CC |> {OBJ}
+: {OBJ} | ../tgl/libtgl$(LIB_EXT) |> !BIN |>
