@@ -23,3 +23,7 @@ Well you clone it and run `make`, just kidding I *hate* `make`.
 Get [tup](http://gittup.org/tup), it's better.
 
 Just clone and run `tup`.
+
+# Differences from standard
+- glBind* commands *must* use glGen* names
+- glIs* commands will return true for glGen* names

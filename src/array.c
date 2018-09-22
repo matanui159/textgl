@@ -2,7 +2,7 @@
 #include "error.h"
 #include <stdlib.h>
 
-void tgl_array_create(tgl_array_t* array, GLsizeiptr elem_size) {
+void tgl_array_create(tgl_array_t* array, GLsizei elem_size) {
 	array->data = NULL;
 	array->elem_size = elem_size;
 	array->size = 0;

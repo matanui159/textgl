@@ -38,4 +38,19 @@ static void __attribute__((constructor)) test_##name() { \
 	"glGetError() == " #error \
 )
 
+#define TEST_BIND(obj, target) do { \
+	GLuint _tname; \
+	glGen##obj##s(1, &_tname);\
+	glBind##obj(target, _tname); \
+} while (0)
+
+#define TEST_PARAM(obj, target, query, value) do { \
+	GLint _tvalue; \
+	glGet##obj##Parameteriv(target, query, &_tvalue); \
+	TEST__CHECK( \
+		_tvalue == value, \
+		#query " == " #value \
+	); \
+} while (0)
+
 #endif

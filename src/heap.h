@@ -3,8 +3,8 @@
 #include <GLES2/gl2.h>
 #include "array.h"
 
-typedef void (*tgl_heap_create_t)(void* obj);
-typedef void (*tgl_heap_destroy_t)(void* obj);
+typedef void (*tgl_heap_create_t)(GLuint name, void* obj);
+typedef void (*tgl_heap_destroy_t)(GLuint name, void* obj);
 
 typedef struct tgl_heap_t {
 	tgl_array_t array;
@@ -12,7 +12,7 @@ typedef struct tgl_heap_t {
 	tgl_heap_destroy_t destroy;
 } tgl_heap_t;
 
-void tgl_heap_create(tgl_heap_t* heap, GLsizeiptr elem_size,
+void tgl_heap_create(tgl_heap_t* heap, GLsizei elem_size,
 	tgl_heap_create_t create, tgl_heap_destroy_t destroy);
 void tgl_heap_destroy(tgl_heap_t* heap);
 void tgl_heap_gen(tgl_heap_t* heap, GLsizei size, GLuint* names);
