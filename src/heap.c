@@ -9,7 +9,7 @@ void tgl_heap_create(tgl_heap_t* heap, GLsizei elem_size,
 }
 
 void tgl_heap_destroy(tgl_heap_t* heap) {
-	for (GLintptr i = 0; i < heap->array.size; ++i) {
+	for (GLintptr i = 1; i < heap->array.size; ++i) {
 		_Bool* used = tgl_array_get(&heap->array, i);
 		if (*used) {
 			heap->destroy(i, used + 1);
