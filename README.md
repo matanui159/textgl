@@ -28,42 +28,53 @@ Just clone and run `tup`.
 - glBind* commands *must* use glGen* names
 - glIs* commands will return true for glGen* names
 
-# Files
+# Files and status
 Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_cards/OpenGL-ES-2_0-Reference-card.pdf).
 
 ## `array.c` and `heap.c`
-- Internal utilities
+- [x] Internal utilities
 
 ## `error.c`
-- Errors
+- [x] Errors
+- [x] Tests
 
 ## `buffer.c`
-- Buffer Objects
+- [x] Buffer Objects
+- [x] Tests
 
 ## `texture.c`
-- Texturing
+- [ ] Texturing
+- [ ] Tests
 
 ## `shader.c`
-- Shaders and Programs (shaders)
+- [ ] Shaders and Programs (shaders)
+- [ ] Tests
 
 ## `program.c`
-- Shaders and Programs (programs)
+- [ ] Shaders and Programs (programs)
+- [ ] Tests
 
 ## `frame.c`
-- Framebuffer Objects
-- Whole Framebuffer Operations (masks)
-- Per-Fragment Operations (scissor)
-- Reading Pixels
-- Pixel Rectangles
+- [ ] Framebuffer Objects
+- [ ] Whole Framebuffer Operations (masks)
+- [ ] Per-Fragment Operations (scissor)
+- [ ] Reading Pixels
+- [ ] Pixel Rectangles
+- [ ] Tests
 
 ## `draw.c`
-- Vertices
-- Rasterization
-- Viewport and Clipping
-- Whole Framebuffer Operations (clear)
-- Per-Fragment Operations (non-scissor)
+- [ ] Vertices {next task}
+- [ ] Rasterization {next task}
+- [ ] Viewport and Clipping
+- [ ] Whole Framebuffer Operations (clear)
+- [ ] Per-Fragment Operations (non-scissor)
+- [ ] Tests
 
-# `misc.c`
-- State and State Requests
-- Special Functions
-- Enable/Disable
+## `misc.c`
+- [ ] State and State Requests {partially implemented in `get.c`}
+- [ ] Special Functions
+- [ ] Enable/Disable
+- [ ] Tests
+
+## Other Tasks
+- [ ] Real world tests
