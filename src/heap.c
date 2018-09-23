@@ -27,16 +27,16 @@ void tgl_heap_gen(tgl_heap_t* heap, GLsizei size, GLuint* names) {
 	GLuint name = 1;
 	for (GLsizei i = 0; i < size; ++i) {
 		for (;; ++name) {
-			GLboolean resize = 0;
+			GLboolean resize = GL_FALSE;
 			if (name >= (GLuint)heap->array.size) {
 				tgl_array_resize(&heap->array, name + 1);
-				resize = 1;
+				resize = GL_TRUE;
 			}
 
 			GLboolean* used = tgl_array_get(&heap->array, name);
 			if (resize || !*used) {
 				heap->create(name, used + 1);
-				*used = 1;
+				*used = GL_TRUE;
 				names[i] = name;
 				break;
 			}
@@ -55,7 +55,7 @@ void tgl_heap_delete(tgl_heap_t* heap, GLsizei size, const GLuint* names) {
 			GLboolean* used = tgl_array_get(&heap->array, names[i]);
 			if (*used) {
 				heap->destroy(names[i], used + 1);
-				*used = 0;
+				*used = GL_FALSE;
 			}
 		}
 	}
@@ -80,7 +80,7 @@ void* tgl_heap_get(tgl_heap_t* heap, GLuint name) {
 
 GLboolean tgl_heap_is(tgl_heap_t* heap, GLuint name) {
 	if (name == 0 || name >= (GLuint)heap->array.size) {
-		return 0;
+		return GL_FALSE;
 	}
 
 	GLboolean* used = tgl_array_get(&heap->array, name);

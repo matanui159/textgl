@@ -42,9 +42,9 @@ GL_APICALL void GL_APIENTRY glGetBooleanv(GLenum query, GLboolean* values) {
 	GLint size = misc_get(query, results);
 	for (GLint i = 0; i < size; ++i) {
 		if (results[i] == 0) {
-			values[i] = 0;
+			values[i] = GL_FALSE;
 		} else {
-			values[i] = 1;
+			values[i] = GL_TRUE;
 		}
 	}
 }
