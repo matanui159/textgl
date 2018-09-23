@@ -23,6 +23,12 @@ TEST_BEGIN(glGenBuffers) {
 	TEST_CHECK(buffers[0] != buffers[2]);
 	TEST_CHECK(buffers[1] != buffers[2]);
 	TEST_ERROR(GL_NO_ERROR);
+
+	++buffers[2];
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glGenBuffers(1, buffers);
+	TEST_CHECK(buffers[0] != buffers[2]);
+	TEST_ERROR(GL_NO_ERROR);
 } TEST_END
 
 TEST_BEGIN(glDeleteBuffers) {
