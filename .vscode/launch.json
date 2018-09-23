@@ -13,7 +13,7 @@
 			"program": "${workspaceRoot}/bin/test",
 			"cwd": "${workspaceFolder}",
 			"externalConsole": true,
-			"preLaunchTask": "tup",
+			"preLaunchTask": "make",
 			"windows": {
 				"miDebuggerPath": "gdb.exe"
 			}

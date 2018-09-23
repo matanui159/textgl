@@ -24,6 +24,14 @@ Get [tup](http://gittup.org/tup), it's better.
 
 Just clone and run `tup`.
 
+That being said I still use a `Makefile` for some common commands:
+- `make` or `make all`: builds the project by running `tup`
+- `make clean`: cleans the project by running `git clean -fdX`
+- `make test`: builds and runs tests by running `bin/test`
+
+If you use VS Code, I have provided some config files
+so you can press F5 to build and debug tests.
+
 # Differences from standard
 - glBind* commands *must* use glGen* names
 - glIs* commands will return true for glGen* names
