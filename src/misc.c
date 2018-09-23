@@ -26,10 +26,20 @@ void tgl_misc_exit() {
 }
 
 GL_APICALL void GL_APIENTRY glGetFloatv(GLenum query, GLfloat* values) {
+	if (values == NULL) {
+		tgl_error_set(GL_INVALID_VALUE);
+		return;
+	}
+
 	misc_get(query, values);
 }
 
 GL_APICALL void GL_APIENTRY glGetIntegerv(GLenum query, GLint* values) {
+	if (values == NULL) {
+		tgl_error_set(GL_INVALID_VALUE);
+		return;
+	}
+
 	GLfloat results[8];
 	GLint size = misc_get(query, results);
 	for (GLint i = 0; i < size; ++i) {
@@ -38,6 +48,11 @@ GL_APICALL void GL_APIENTRY glGetIntegerv(GLenum query, GLint* values) {
 }
 
 GL_APICALL void GL_APIENTRY glGetBooleanv(GLenum query, GLboolean* values) {
+	if (values == NULL) {
+		tgl_error_set(GL_INVALID_VALUE);
+		return;
+	}
+	
 	GLfloat results[8];
 	GLint size = misc_get(query, results);
 	for (GLint i = 0; i < size; ++i) {

@@ -19,7 +19,7 @@ void tgl_heap_destroy(tgl_heap_t* heap) {
 }
 
 void tgl_heap_gen(tgl_heap_t* heap, GLsizei size, GLuint* names) {
-	if (size < 0) {
+	if (size < 0 || names == NULL) {
 		tgl_error_set(GL_INVALID_VALUE);
 		return;
 	}
@@ -45,7 +45,7 @@ void tgl_heap_gen(tgl_heap_t* heap, GLsizei size, GLuint* names) {
 }
 
 void tgl_heap_delete(tgl_heap_t* heap, GLsizei size, const GLuint* names) {
-	if (size < 0) {
+	if (size < 0 || names == NULL) {
 		tgl_error_set(GL_INVALID_VALUE);
 		return;
 	}

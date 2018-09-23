@@ -1,11 +1,5 @@
 #include "test.h"
 
-#define BUFFER_BIND(target) do { \
-	GLuint _tbuffer; \
-	glGenBuffers(1, &_tbuffer); \
-	glBindBuffer(target, _tbuffer); \
-} while (0)
-
 #define BUFFER_PARAM(target, query, value) do { \
 	GLint _tresult; \
 	glGetBufferParameteriv(target, query, &_tresult); \
@@ -16,10 +10,13 @@
 } while (0)
 
 TEST_BEGIN(glGenBuffers) {
-	glGenBuffers(-1, NULL);
+	GLuint buffers[3];
+	glGenBuffers(-1, buffers);
 	TEST_ERROR(GL_INVALID_VALUE);
 
-	GLuint buffers[3];
+	glGenBuffers(1, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+
 	glGenBuffers(2, buffers);
 	TEST_CHECK(buffers[0] != buffers[1]);
 	glGenBuffers(1, buffers + 2);
@@ -29,10 +26,13 @@ TEST_BEGIN(glGenBuffers) {
 } TEST_END
 
 TEST_BEGIN(glDeleteBuffers) {
-	glDeleteBuffers(-1, NULL);
+	GLuint buffer;
+	glDeleteBuffers(-1, &buffer);
 	TEST_ERROR(GL_INVALID_VALUE);
 
-	GLuint buffer;
+	glDeleteBuffers(1, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+
 	glGenBuffers(1, &buffer);
 	glDeleteBuffers(1, &buffer);
 	TEST_ERROR(GL_NO_ERROR);
@@ -50,6 +50,10 @@ TEST_BEGIN(glIsBuffer) {
 
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
+	TEST_CHECK(glIsBuffer(buffer) == GL_FALSE);
+	TEST_ERROR(GL_NO_ERROR);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	TEST_CHECK(glIsBuffer(buffer) == GL_TRUE);
 	TEST_ERROR(GL_NO_ERROR);
 
@@ -65,21 +69,32 @@ TEST_BEGIN(glBindBuffer) {
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
 	TEST_ERROR(GL_INVALID_VALUE);
 
-	BUFFER_BIND(GL_ARRAY_BUFFER);
-	BUFFER_BIND(GL_ELEMENT_ARRAY_BUFFER);
+	GLuint buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	TEST_ERROR(GL_NO_ERROR);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	TEST_ERROR(GL_NO_ERROR);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 8);
 	TEST_ERROR(GL_NO_ERROR);
 } TEST_END
 
 TEST_BEGIN(glGetBufferParameteriv) {
-	glGetBufferParameteriv(GL_INVALID_ENUM, GL_BUFFER_SIZE, NULL);
+	GLint value;
+	glGetBufferParameteriv(GL_INVALID_ENUM, GL_BUFFER_SIZE, &value);
+	TEST_ERROR(GL_INVALID_ENUM);
+
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &value);
+	TEST_ERROR(GL_INVALID_OPERATION);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 1);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_INVALID_ENUM, &value);
 	TEST_ERROR(GL_INVALID_ENUM);
 
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, NULL);
-	TEST_ERROR(GL_INVALID_OPERATION);
-
-	BUFFER_BIND(GL_ARRAY_BUFFER);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_INVALID_ENUM, NULL);
-	TEST_ERROR(GL_INVALID_ENUM);
+	TEST_ERROR(GL_INVALID_VALUE);
 
 	BUFFER_PARAM(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, 0);
 	BUFFER_PARAM(GL_ARRAY_BUFFER, GL_BUFFER_USAGE, GL_STATIC_DRAW);
@@ -93,7 +108,7 @@ TEST_BEGIN(glBufferData) {
 	glBufferData(GL_ARRAY_BUFFER, 0, NULL, GL_STATIC_DRAW);
 	TEST_ERROR(GL_INVALID_OPERATION);
 
-	BUFFER_BIND(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 1);
 	glBufferData(GL_ARRAY_BUFFER, -1, NULL, GL_STATIC_DRAW);
 	TEST_ERROR(GL_INVALID_VALUE);
 
@@ -123,7 +138,7 @@ TEST_BEGIN(glBufferSubData) {
 	glBufferSubData(GL_ARRAY_BUFFER, 0, 0, NULL);
 	TEST_ERROR(GL_INVALID_OPERATION);
 
-	BUFFER_BIND(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 1);
 	glBufferSubData(GL_ARRAY_BUFFER, -1, 0, NULL);
 	TEST_ERROR(GL_INVALID_VALUE);
 

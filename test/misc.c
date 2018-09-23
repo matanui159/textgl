@@ -1,10 +1,13 @@
 #include "test.h"
 
 TEST_BEGIN(glGetFloatv) {
-	glGetFloatv(GL_INVALID_ENUM, NULL);
+	GLfloat value;
+	glGetFloatv(GL_INVALID_ENUM, &value);
 	TEST_ERROR(GL_INVALID_ENUM);
 
-	GLfloat value;
+	glGetFloatv(GL_GENERATE_MIPMAP_HINT, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+
 	glGetFloatv(GL_GENERATE_MIPMAP_HINT, &value);
 	TEST_CHECK(value == GL_DONT_CARE);
 	TEST_ERROR(GL_NO_ERROR);
@@ -16,10 +19,13 @@ TEST_BEGIN(glGetFloatv) {
 } TEST_END
 
 TEST_BEGIN(glGetIntegerv) {
-	glGetIntegerv(GL_INVALID_ENUM, NULL);
+	GLint value;
+	glGetIntegerv(GL_INVALID_ENUM, &value);
 	TEST_ERROR(GL_INVALID_ENUM);
 
-	GLint value;
+	glGetIntegerv(GL_GENERATE_MIPMAP_HINT, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+
 	glGetIntegerv(GL_GENERATE_MIPMAP_HINT, &value);
 	TEST_CHECK(value == GL_DONT_CARE);
 	TEST_ERROR(GL_NO_ERROR);
@@ -31,10 +37,13 @@ TEST_BEGIN(glGetIntegerv) {
 } TEST_END
 
 TEST_BEGIN(glGetBooleanv) {
-	glGetIntegerv(GL_INVALID_ENUM, NULL);
+	GLboolean value;
+	glGetBooleanv(GL_INVALID_ENUM, &value);
 	TEST_ERROR(GL_INVALID_ENUM);
 
-	GLboolean value;
+	glGetBooleanv(GL_GENERATE_MIPMAP_HINT, NULL);
+	TEST_ERROR(GL_INVALID_VALUE);
+
 	glGetBooleanv(GL_GENERATE_MIPMAP_HINT, &value);
 	TEST_CHECK(value == GL_TRUE);
 	TEST_ERROR(GL_NO_ERROR);
@@ -62,7 +71,7 @@ TEST_BEGIN(glFinish) {
 	TEST_ERROR(GL_NO_ERROR);
 } TEST_END
 
-TEST_BEGIN(glhint) {
+TEST_BEGIN(glHint) {
 	glHint(GL_INVALID_ENUM, GL_DONT_CARE);
 	TEST_ERROR(GL_INVALID_ENUM);
 
