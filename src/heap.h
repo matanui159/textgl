@@ -18,6 +18,6 @@ void tgl_heap_destroy(tgl_heap_t* heap);
 void tgl_heap_gen(tgl_heap_t* heap, GLsizei size, GLuint* names);
 void tgl_heap_delete(tgl_heap_t* heap, GLsizei size, const GLuint* names);
 void* tgl_heap_get(tgl_heap_t* heap, GLuint name);
-_Bool tgl_heap_is(tgl_heap_t* heap, GLuint name);
+GLboolean tgl_heap_is(tgl_heap_t* heap, GLuint name);
 
 #endif

@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
-extern int g_test_pass;
-extern int g_test_fail;
+extern GLint g_test_pass;
+extern GLint g_test_fail;
 
 #define TEST__STRING(value) #value
 #define TEST_STRING(value) TEST__STRING(value)
