@@ -71,8 +71,8 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [ ] Tests
 
 ## `misc.c`
-- [ ] State and State Requests {partially implemented in `get.c`}
-- [ ] Special Functions
+- [x] State and State Requests
+- [x] Special Functions
 - [ ] Enable/Disable
 - [ ] Tests
 

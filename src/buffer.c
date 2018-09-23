@@ -57,14 +57,16 @@ void tgl_buffer_exit() {
 	tgl_heap_destroy(&g_heap);
 }
 
-void tgl_buffer_info(GLenum query, GLint* values) {
+GLint tgl_buffer_info(GLenum query, GLfloat* values) {
 	switch (query) {
 		case GL_ARRAY_BUFFER_BINDING:
 			values[0] = g_array;
-			break;
+			return 1;
 		case GL_ELEMENT_ARRAY_BUFFER:
 			values[0] = g_elements;
-			break;
+			return 1;
+		default:
+			return 0;
 	}
 }
 

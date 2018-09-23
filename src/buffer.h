@@ -10,7 +10,7 @@ typedef struct tgl_buffer_t {
 
 void tgl_buffer_init();
 void tgl_buffer_exit();
-void tgl_buffer_info(GLenum query, GLint* values);
+GLint tgl_buffer_info(GLenum query, GLfloat* values);
 tgl_buffer_t* tgl_buffer_get(GLuint buffer);
 
 #endif
