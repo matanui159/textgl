@@ -1,13 +1,15 @@
 #ifndef TGL_HEAP_H_
 #define TGL_HEAP_H_
 #include <GLES2/gl2.h>
-#include "array.h"
 
 typedef void (*tgl_heap_create_t)(GLuint name, void* obj);
 typedef void (*tgl_heap_destroy_t)(GLuint name, void* obj);
 
+typedef struct tgl_heap_entry_t tgl_heap_entry_t;
+
 typedef struct tgl_heap_t {
-	tgl_array_t array;
+	tgl_heap_entry_t* entries;
+	GLsizei elem_size;
 	tgl_heap_create_t create;
 	tgl_heap_destroy_t destroy;
 } tgl_heap_t;
