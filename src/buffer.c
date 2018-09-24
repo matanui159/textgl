@@ -111,6 +111,10 @@ GL_APICALL void GL_APIENTRY glGetBufferParameteriv(GLenum target, GLenum name,
 	if (buffer == NULL) {
 		return;
 	}
+	if (values == NULL) {
+		tgl_error_set(GL_INVALID_VALUE);
+		return;
+	}
 
 	switch (name) {
 		case GL_BUFFER_SIZE:
