@@ -72,9 +72,6 @@ TEST_BEGIN(glBindBuffer) {
 	glBindBuffer(GL_INVALID_ENUM, 0);
 	TEST_ERROR(GL_INVALID_ENUM);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
-	TEST_ERROR(GL_INVALID_VALUE);
-
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);

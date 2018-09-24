@@ -1,6 +1,6 @@
 #include "heap.h"
 #include "error.h"
-#include <stdlib.h>
+#include "mem.h"
 #include <stdint.h>
 
 struct tgl_heap_entry_t {
@@ -34,9 +34,8 @@ static tgl_heap_entry_t* heap_add(tgl_heap_t* heap, GLuint name) {
 	tgl_heap_entry_t* prev;
 	tgl_heap_entry_t* entry = heap_get(heap, name, &prev);
 	if (entry == NULL) {
-		entry = malloc(sizeof(tgl_heap_entry_t) + heap->elem_size);
+		entry = tgl_mem_create(sizeof(tgl_heap_entry_t) + heap->elem_size);
 		if (entry == NULL) {
-			tgl_error_set(GL_OUT_OF_MEMORY);
 			return NULL;
 		}
 
@@ -81,9 +80,9 @@ void tgl_heap_destroy(tgl_heap_t* heap) {
 	while (entry != NULL) {
 		tgl_heap_entry_t* next = entry->next;
 		if (entry->created) {
-			heap->destroy(entry->name, entry + 1);
+			heap->destroy(entry + 1);
 		}
-		free(entry);
+		tgl_mem_destroy(entry);
 		entry = next;
 	}
 }
@@ -125,9 +124,9 @@ void tgl_heap_delete(tgl_heap_t* heap, GLsizei size, const GLuint* names) {
 				prev->next = entry->next;
 			}
 			if (entry->created) {
-				heap->destroy(names[i], entry + 1);
+				heap->destroy(entry + 1);
 			}
-			free(entry);
+			tgl_mem_destroy(entry);
 		}
 	}
 }
@@ -139,7 +138,8 @@ void* tgl_heap_get(tgl_heap_t* heap, GLuint name) {
 
 	tgl_heap_entry_t* entry = heap_add(heap, name);
 	if (!entry->created) {
-		heap->create(name, entry + 1);
+		heap->create(entry + 1);
+		entry->created = GL_TRUE;
 	}
 	return entry + 1;
 }
@@ -150,5 +150,15 @@ GLboolean tgl_heap_is(tgl_heap_t* heap, GLuint name) {
 		return GL_TRUE;
 	} else {
 		return GL_FALSE;
+	}
+}
+
+GLuint tgl_heap_name(tgl_heap_t* heap, void* obj) {
+	((void)heap);
+	if (obj == NULL) {
+		return 0;
+	} else {
+		tgl_heap_entry_t* entry = (tgl_heap_entry_t*)obj - 1;
+		return entry->name;
 	}
 }

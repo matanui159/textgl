@@ -32,14 +32,10 @@ That being said I still use a `Makefile` for some common commands:
 If you use VS Code, I have provided some config files
 so you can press F5 to build and debug tests.
 
-# Differences from standard
-- glBind* commands *must* use glGen* names
-- glIs* commands will return true for glGen* names
-
 # Files and status
 Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_cards/OpenGL-ES-2_0-Reference-card.pdf).
 
-## `array.c` and `heap.c`
+## `mem.c` and `heap.c`
 - [x] Internal utilities
 
 ## `error.c`

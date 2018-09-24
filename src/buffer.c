@@ -1,32 +1,56 @@
 #include "buffer.h"
-#include "heap.h"
 #include "error.h"
+#include "mem.h"
+#include "heap.h"
 #include <string.h>
 
 static tgl_heap_t g_heap;
-static GLuint g_array;
-static GLuint g_elements;
+static tgl_buffer_t* g_array;
+static tgl_buffer_t* g_elements;
 
-static void buffer_create(GLuint name, void* obj) {
-	(void)name;
+static void buffer_create(void* obj) {
 	tgl_buffer_t* buffer = obj;
-	tgl_array_create(&buffer->array, 1);
+	buffer->data = NULL;
 	buffer->usage = GL_STATIC_DRAW;
 }
 
-static void buffer_destroy(GLuint name, void* obj) {
+static void buffer_destroy(void* obj) {
 	tgl_buffer_t* buffer = obj;
-	tgl_array_destroy(&buffer->array);
-	if (name == g_array) {
-		g_array = 0;
+	tgl_mem_destroy(buffer->data);
+	if (buffer == g_array) {
+		g_array = NULL;
 	}
-	if (name == g_elements) {
-		g_elements = 0;
+	if (buffer == g_elements) {
+		g_elements = NULL;
 	}
 }
 
-static tgl_buffer_t* buffer_get(GLenum target) {
-	GLuint buffer;
+void tgl_buffer_init() {
+	tgl_heap_create(&g_heap, sizeof(tgl_buffer_t),
+		buffer_create, buffer_destroy);
+	g_array = NULL;
+	g_elements = NULL;
+}
+
+void tgl_buffer_exit() {
+	tgl_heap_destroy(&g_heap);
+}
+
+GLint tgl_buffer_info(GLenum query, GLfloat* values) {
+	switch (query) {
+		case GL_ARRAY_BUFFER_BINDING:
+			values[0] = tgl_heap_name(&g_heap, g_array);
+			return 1;
+		case GL_ELEMENT_ARRAY_BUFFER:
+			values[0] = tgl_heap_name(&g_heap, g_elements);
+			return 1;
+		default:
+			return 0;
+	}
+}
+
+tgl_buffer_t* tgl_buffer_get(GLenum target, GLboolean zero) {
+	tgl_buffer_t* buffer = NULL;
 	switch (target) {
 		case GL_ARRAY_BUFFER:
 			buffer = g_array;
@@ -39,39 +63,11 @@ static tgl_buffer_t* buffer_get(GLenum target) {
 			return NULL;
 	}
 
-	if (buffer == 0) {
+	if (buffer == NULL && !zero) {
 		tgl_error_set(GL_INVALID_OPERATION);
 		return NULL;
 	}
-	return tgl_heap_get(&g_heap, buffer);
-}
-
-void tgl_buffer_init() {
-	tgl_heap_create(&g_heap, sizeof(tgl_buffer_t),
-		buffer_create, buffer_destroy);
-	g_array = 0;
-	g_elements = 0;
-}
-
-void tgl_buffer_exit() {
-	tgl_heap_destroy(&g_heap);
-}
-
-GLint tgl_buffer_info(GLenum query, GLfloat* values) {
-	switch (query) {
-		case GL_ARRAY_BUFFER_BINDING:
-			values[0] = g_array;
-			return 1;
-		case GL_ELEMENT_ARRAY_BUFFER:
-			values[0] = g_elements;
-			return 1;
-		default:
-			return 0;
-	}
-}
-
-tgl_buffer_t* tgl_buffer_get(GLuint buffer) {
-	return tgl_heap_get(&g_heap, buffer);
+	return buffer;
 }
 
 GL_APICALL void GL_APIENTRY glGenBuffers(GLsizei size, GLuint* buffers) {
@@ -87,11 +83,8 @@ GL_APICALL GLboolean GL_APIENTRY glIsBuffer(GLuint buffer) {
 	return tgl_heap_is(&g_heap, buffer);
 }
 
-GL_APICALL void GL_APIENTRY glBindBuffer(GLenum target, GLuint buffer) {
-	if (buffer != 0 && tgl_heap_get(&g_heap, buffer) == NULL) {
-		return;
-	}
-
+GL_APICALL void GL_APIENTRY glBindBuffer(GLenum target, GLuint name) {
+	tgl_buffer_t* buffer = tgl_heap_get(&g_heap, name);
 	switch (target) {
 		case GL_ARRAY_BUFFER:
 			g_array = buffer;
@@ -107,7 +100,7 @@ GL_APICALL void GL_APIENTRY glBindBuffer(GLenum target, GLuint buffer) {
 
 GL_APICALL void GL_APIENTRY glGetBufferParameteriv(GLenum target, GLenum name,
 		GLint* values) {
-	tgl_buffer_t* buffer = buffer_get(target);
+	tgl_buffer_t* buffer = tgl_buffer_get(target, GL_FALSE);
 	if (buffer == NULL) {
 		return;
 	}
@@ -118,7 +111,7 @@ GL_APICALL void GL_APIENTRY glGetBufferParameteriv(GLenum target, GLenum name,
 
 	switch (name) {
 		case GL_BUFFER_SIZE:
-			values[0] = buffer->array.size;
+			values[0] = tgl_mem_size(buffer->data);
 			break;
 		case GL_BUFFER_USAGE:
 			values[0] = buffer->usage;
@@ -131,7 +124,7 @@ GL_APICALL void GL_APIENTRY glGetBufferParameteriv(GLenum target, GLenum name,
 
 GL_APICALL void GL_APIENTRY glBufferData(GLenum target, GLsizeiptr size,
 		const GLvoid* data, GLenum usage) {
-	tgl_buffer_t* buffer = buffer_get(target);
+	tgl_buffer_t* buffer = tgl_buffer_get(target, GL_FALSE);
 	if (buffer == NULL) {
 		return;
 	}
@@ -150,24 +143,27 @@ GL_APICALL void GL_APIENTRY glBufferData(GLenum target, GLsizeiptr size,
 	}
 
 	buffer->usage = usage;
-	tgl_array_resize(&buffer->array, size);
+	buffer->data = tgl_mem_resize(buffer->data, size);
+	if (buffer->data == NULL) {
+		return;
+	}
 	if (data != NULL) {
-		memcpy(buffer->array.data, data, size);
+		memcpy(buffer->data, data, size);
 	}
 }
 
 GL_APICALL void GL_APIENTRY glBufferSubData(GLenum target, GLintptr offset,
 		GLsizeiptr size, const GLvoid* data) {
-	tgl_buffer_t* buffer = buffer_get(target);
+	tgl_buffer_t* buffer = tgl_buffer_get(target, GL_FALSE);
 	if (buffer == NULL) {
 		return;
 	}
-	if (offset < 0 || size < 0 || offset + size > buffer->array.size) {
+	if (offset < 0 || size < 0 || offset + size > tgl_mem_size(buffer->data)) {
 		tgl_error_set(GL_INVALID_VALUE);
 		return;
 	}
 	
 	if (data != NULL) {
-		memcpy(buffer->array.data + offset, data, size);
+		memcpy(buffer->data + offset, data, size);
 	}
 }
