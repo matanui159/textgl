@@ -1,21 +1,18 @@
-ifeq ($(verbose),y)
-	TUP_FLAGS += --verbose
-endif
-
-ifndef config
-	config = debug
-endif
-
-all:
-	echo CONFIG = $(config) | tee config.tup
-	echo CC_FLAGS += $(cc) | tee -a config.tup
-	echo LD_FLAGS += $(ld) | tee -a config.tup
+build:
+	echo RELEASE = $(RELEASE) > config.tup
 	tup $(TUP_FLAGS)
 
 clean:
 	git clean -fdX
 
-test: all
+test: build
 	bin/test
 
-.SILENT: all clean test
+verbose:
+	$(eval TUP_FLAGS += --verbose)
+
+release:
+	$(eval RELEASE = y)
+
+.PHONY: build clean test verbose release
+.SILENT: build clean test verbose release

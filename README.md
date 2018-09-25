@@ -20,18 +20,12 @@ I was *VERY* bored.
 
 # How to build
 To build it you will need `make` and `tup` installed.
-
-## `make` commands
-- `all` (default): sets up `config.tup` and runs `tup` to build the project.
-- `clean`: uses `git` to remove ignored files.
-- `test`: builds the project and runs tests.
-
-## `make` flags
-- `verbose=y`: shows the full commands `tup` is executing.
-- `config=release`: builds the library and tests with release flags.
-- `config=none`: builds the library and tests without extra flags.
-- `cc=...`: adds custom compiler flags.
-- `ld=...`: adds custom linker flags.
+The following `make` rules are available:
+- `build` (default): builds the project with `tup`
+- `clean`: cleans the project using `git` to delete ignored files
+- `test`: builds and runs the test executable
+- `verbose`: prepend other rules to make `tup` verbose
+- `release`: prepend other rules to enable release builds
 
 ## VS Code support
 If you use VS Code, I have provided some config files
@@ -52,7 +46,7 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [x] Tests
 
 ## `texture.c`
-- [ ] Texturing
+- [ ] Texturing {internal object implementation}
 - [ ] Tests
 
 ## `shader.c`
@@ -64,7 +58,7 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [ ] Tests
 
 ## `frame.c`
-- [ ] Framebuffer Objects
+- [ ] Framebuffer Objects {started work}
 - [ ] Whole Framebuffer Operations (masks)
 - [ ] Per-Fragment Operations (scissor)
 - [ ] Reading Pixels
@@ -72,8 +66,8 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [ ] Tests
 
 ## `draw.c`
-- [ ] Vertices {next task}
-- [ ] Rasterization {next task}
+- [ ] Vertices
+- [ ] Rasterization
 - [ ] Viewport and Clipping
 - [ ] Whole Framebuffer Operations (clear)
 - [ ] Per-Fragment Operations (non-scissor)
