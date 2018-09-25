@@ -19,16 +19,21 @@ Here.
 I was *VERY* bored.
 
 # How to build
-Well you clone it and run `make`, just kidding I *hate* `make`.
-Get [tup](http://gittup.org/tup), it's better.
+To build it you will need `make` and `tup` installed.
 
-Just clone and run `tup`.
+## `make` commands
+- `all` (default): sets up `config.tup` and runs `tup` to build the project.
+- `clean`: uses `git` to remove ignored files.
+- `test`: builds the project and runs tests.
 
-That being said I still use a `Makefile` for some common commands:
-- `make` or `make all`: builds the project by running `tup`
-- `make clean`: cleans the project by running `git clean -fdX`
-- `make test`: builds and runs tests by running `bin/test`
+## `make` flags
+- `verbose=y`: shows the full commands `tup` is executing.
+- `config=release`: builds the library and tests with release flags.
+- `config=none`: builds the library and tests without extra flags.
+- `cc=...`: adds custom compiler flags.
+- `ld=...`: adds custom linker flags.
 
+## VS Code support
 If you use VS Code, I have provided some config files
 so you can press F5 to build and debug tests.
 

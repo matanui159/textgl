@@ -1,4 +1,5 @@
-DEBUG = y
+include config.tup
+
 WIN32 = n
 ifeq (@(TUP_PLATFORM),win32)
 	WIN32 = y
@@ -11,14 +12,16 @@ ifeq ($(WIN32),y)
 	LIB_EXT = .dll
 endif
 
-CC_FLAGS += -Wall -Wextra
-ifeq ($(DEBUG),y)
-	CC_FLAGS += -g
-else
-	CC_FLAGS += -flto -O3
-	LD_FLAGS += -flto -O3 -s
+ifneq ($(CONFIG),none)
+	CC_FLAGS += -std=c99
+	CC_FLAGS += -Werror -Wall -Wextra -Wpedantic
+	ifeq ($(CONFIG),debug)
+		CC_FLAGS += -g
+	else
+		CC_FLAGS += -flto -O3
+		LD_FLAGS += -flto -O3 -s
+	endif
 endif
 
 !CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |>
-!AR = |> ^ AR %o^ gcc-ar rcT %o %f |>
 !LD = |> ^ LD %o^ gcc %f -o %o $(LD_FLAGS) |>

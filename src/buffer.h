@@ -3,7 +3,7 @@
 #include <GLES2/gl2.h>
 
 typedef struct tgl_buffer_t {
-	void* data;
+	GLbyte* data;
 	GLenum usage;
 } tgl_buffer_t;
 
