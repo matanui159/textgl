@@ -1,4 +1,5 @@
 #include "frameb.h"
+#include "native/native.h"
 
 static tgl_texture_t g_def_color;
 static tgl_frameb_t g_def_frameb;
@@ -16,7 +17,9 @@ void tgl_frameb_exit() {
 }
 
 void tgl_frameb_resize() {
-	tgl_texture_resize(&g_def_color, 8, 8);
+	GLint width, height;
+	tgl_native_size(&width, &height);
+	tgl_texture_resize(&g_def_color, width, height);
 }
 
 tgl_frameb_t* tgl_frameb_get() {

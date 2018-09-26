@@ -8,6 +8,7 @@ extern "C" {
 
 GL_APICALL void GL_APIENTRY tgl_init();
 GL_APICALL void GL_APIENTRY tgl_exit();
+GL_APICALL void GL_APIENTRY tgl_update();
 
 #ifdef __cplusplus
 }

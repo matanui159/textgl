@@ -10,7 +10,7 @@ void tgl_draw_init() {
 void tgl_draw_exit() {
 }
 
-GL_APIENTRY void GL_APICALL glClearColor(GLfloat r, GLfloat g,
+GL_APICALL void GL_APIENTRY glClearColor(GLfloat r, GLfloat g,
 		GLfloat b, GLfloat a) {
 	g_clear_color.r = r;
 	g_clear_color.g = g;
@@ -18,7 +18,7 @@ GL_APIENTRY void GL_APICALL glClearColor(GLfloat r, GLfloat g,
 	g_clear_color.a = a;
 }
 
-GL_APIENTRY void GL_APICALL glClear(GLbitfield buffers) {
+GL_APICALL void GL_APIENTRY glClear(GLbitfield buffers) {
 	if (buffers & GL_COLOR_BUFFER_BIT) {
 		tgl_texture_t* color = tgl_frameb_get()->color;
 		for (GLint y = 0; y < color->width; ++y) {
