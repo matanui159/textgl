@@ -57,7 +57,7 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [ ] Shaders and Programs (programs)
 - [ ] Tests
 
-## `frame.c`
+## `frameb.c`
 - [ ] Framebuffer Objects {started work}
 - [ ] Whole Framebuffer Operations (masks)
 - [ ] Per-Fragment Operations (scissor)
@@ -69,7 +69,7 @@ Based on this [reference](https://www.khronos.org/opengles/sdk/docs/reference_ca
 - [ ] Vertices
 - [ ] Rasterization
 - [ ] Viewport and Clipping
-- [ ] Whole Framebuffer Operations (clear)
+- [x] Whole Framebuffer Operations (clear)
 - [ ] Per-Fragment Operations (non-scissor)
 - [ ] Tests
 

@@ -1,8 +1,9 @@
 include_rules
 
-CC_FLAGS += -Iinc -msse
+CC_FLAGS += -Iinc -mmmx
 
 : foreach src/*.c |> !CC |> bin/obj/%B.o {LIB_OBJ}
+# : foreach src/native/$(NATIVE).c |> !CC |> bin/obj/%B.o {LIB_OBJ}
 : {LIB_OBJ} |> !LD -shared |> bin/libtgl$(LIB_EXT) {LIB}
 
 LD_FLAGS += -Lbin -ltgl

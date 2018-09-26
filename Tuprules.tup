@@ -1,19 +1,24 @@
 include config.tup
 
+NATIVE = posix
+ifeq (@(TUP_PLATFORM),win32)
+	NATIVE = win32
+endif
+
 BIN_EXT =
 LIB_EXT = .so
-ifeq (@(TUP_PLATFORM),win32)
+ifeq ($(NATIVE),win32)
 	BIN_EXT = .exe
 	LIB_EXT = .dll
 endif
 
 CC_FLAGS += -Werror -Wall -Wextra -Wpedantic
-CC_FLAGS += -std=c99
+CC_FLAGS += -std=c11
 
 ifeq ($(RELEASE),y)
 	CC_FLAGS += -flto -O3
 	LD_FLAGS += -flto -O3 -s
-	ifeq (@(TUP_PLATFORM),win32)
+	ifeq ($(NATIVE),win32)
 		LD_FLAGS += -static-libgcc
 	endif
 else

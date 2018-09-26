@@ -13,7 +13,11 @@ void tgl_texture_destroy(tgl_texture_t* texture) {
 }
 
 void tgl_texture_resize(tgl_texture_t* texture, GLsizei width, GLsizei height) {
-	texture->data = tgl_mem_resize(texture->data, width * height * 4);
+	texture->data = tgl_mem_resize(
+		texture->data,
+		width * height * sizeof(tgl_pixel_t)
+	);
+	
 	if (texture->data == NULL) {
 		tgl_error_set(GL_OUT_OF_MEMORY);
 		return;
