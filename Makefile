@@ -1,12 +1,13 @@
 build:
-	echo RELEASE = $(RELEASE) > config.tup
+	echo RELEASE = $(RELEASE) > tup/config.tup
 	tup $(TUP_FLAGS)
+	echo
 
 clean:
 	git clean -fdX
 
 test: build
-	bin/test
+	util/test/test
 
 verbose:
 	$(eval TUP_FLAGS += --verbose)

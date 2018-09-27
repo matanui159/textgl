@@ -1,4 +1,5 @@
-include config.tup
+.gitignore
+include tup/config.tup
 
 NATIVE = posix
 ifeq (@(TUP_PLATFORM),win32)
@@ -12,18 +13,34 @@ ifeq ($(NATIVE),win32)
 	LIB_EXT = .dll
 endif
 
-CC_FLAGS += -Werror -Wall -Wextra -Wpedantic
+CC_FLAGS += -Wall -Wextra -Wpedantic
 CC_FLAGS += -std=c11
 
 ifeq ($(RELEASE),y)
-	CC_FLAGS += -flto -O3
-	LD_FLAGS += -flto -O3 -s
+	CC_FLAGS += -O3
+	LD_FLAGS += -s
 	ifeq ($(NATIVE),win32)
 		LD_FLAGS += -static-libgcc
+		LD_FLAGS += -static-libstdc++
 	endif
 else
 	CC_FLAGS += -g
 endif
 
-!CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |>
-!LD = |> ^ LD %o^ gcc %f -o %o $(LD_FLAGS) |>
+!CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |> bin/%d/%B.o
+!AR = |> ^ AR %o^ gcc-ar rcs %o %f |> lib%d.a
+!LIB = |> ^ LIB %o^ g++ %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
+!BIN = |> ^ BIN %o^ g++ %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
+
+UTIL = $(TUP_CWD)/util
+UTIL_LIB = $(UTIL)/libutil.a
+UTIL_CC = -I$(UTIL)/inc
+UTIL_LD = -L$(UTIL) -lutil
+
+EGL = $(TUP_CWD)/EGL
+EGL_LIB = $(EGL)/libEGL$(LIB_EXT)
+EGL_LD = -L$(EGL) -lEGL
+
+GLES = $(TUP_CWD)/GLESv2
+GLES_LIB = $(GLES)/libGLESv2$(LIB_EXT)
+GLES_LD = -L$(GLES) -lGLESv2
