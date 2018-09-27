@@ -8,7 +8,7 @@ void tgl_mem_test() {
 	ptr = tgl_mem_resize(ptr, 16);
 	TGL_CHECK(tgl_mem_size(ptr) == 16);
 	ptr[12] = 0;
-
+	
 	ptr = tgl_mem_resize(ptr, 4);
 	TGL_CHECK(tgl_mem_size(ptr) == 4);
 	ptr[2] = 0;
