@@ -17,6 +17,20 @@
 			"windows": {
 				"miDebuggerPath": "gdb.exe"
 			}
+		},
+		{
+			"name": "EGL",
+			"type": "cppdbg",
+			"request": "launch",
+			"MIMode": "gdb",
+			"miDebuggerPath": "gdb",
+			"program": "${workspaceRoot}/EGL/test/test",
+			"cwd": "${workspaceFolder}",
+			"externalConsole": true,
+			"preLaunchTask": "make",
+			"windows": {
+				"miDebuggerPath": "gdb.exe"
+			}
 		}
 	]
 }

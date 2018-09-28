@@ -8,6 +8,7 @@ clean:
 
 test: build
 	util/test/test
+	EGL/test/test
 
 verbose:
 	$(eval TUP_FLAGS += --verbose)
