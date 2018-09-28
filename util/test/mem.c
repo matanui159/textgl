@@ -12,8 +12,8 @@ void tgl_mem_test() {
 	ptr = tgl_mem_resize(ptr, 4);
 	TGL_CHECK(tgl_mem_size(ptr) == 4);
 	ptr[2] = 0;
-
 	tgl_mem_destroy(ptr);
+	
 	TGL_CHECK(tgl_mem_size(NULL) == 0);
 
 	ptr = tgl_mem_resize(NULL, 8);

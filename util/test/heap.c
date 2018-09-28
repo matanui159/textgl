@@ -27,10 +27,10 @@ void tgl_heap_test() {
 	TGL_CHECK(names[0] != names[2]);
 
 	bool* created = tgl_heap_get(&heap, names[0]);
-	TGL_CHECK(created);
+	TGL_CHECK(*created);
 
 	created = tgl_heap_get(&heap, 8);
-	TGL_CHECK(created);
+	TGL_CHECK(*created);
 
 	TGL_CHECK(tgl_heap_get(&heap, 0) == NULL);
 
