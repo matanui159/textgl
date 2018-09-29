@@ -1,5 +1,5 @@
 build:
-	echo RELEASE = $(RELEASE) > tup/config.tup
+	echo RELEASE = $(RELEASE) > tup/make.tup
 	tup $(TUP_FLAGS)
 	echo
 

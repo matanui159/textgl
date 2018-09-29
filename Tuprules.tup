@@ -1,5 +1,5 @@
 .gitignore
-include tup/config.tup
+include tup/make.tup
 
 NATIVE = posix
 ifeq (@(TUP_PLATFORM),win32)
@@ -32,15 +32,4 @@ endif
 !LIB = |> ^ LIB %o^ g++ %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
 !BIN = |> ^ BIN %o^ g++ %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
 
-UTIL = $(TUP_CWD)/util
-UTIL_LIB = $(UTIL)/libutil.a
-UTIL_CC = -I$(UTIL)/inc
-UTIL_LD = -L$(UTIL) -lutil
-
-EGL = $(TUP_CWD)/EGL
-EGL_LIB = $(EGL)/libEGL$(LIB_EXT)
-EGL_LD = -L$(EGL) -lEGL
-
-GLES = $(TUP_CWD)/GLESv2
-GLES_LIB = $(GLES)/libGLESv2$(LIB_EXT)
-GLES_LD = -L$(GLES) -lGLESv2
+include tup/vars.tup
