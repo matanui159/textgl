@@ -38,6 +38,8 @@ TEST_BEGIN(tgl_mem_resize) {
 	TEST_CHECK(tgl_mem_size(ptr) == 8);
 	ptr[4] = 16;
 	TEST_CHECK(ptr[4] == 16);
+
+	tgl_mem_destroy(ptr);
 } TEST_END
 
 TEST_BEGIN(tgl_mem_size) {
