@@ -10,10 +10,10 @@ TEST_LIB = $(TEST)/libtest.a
 TEST_CC = -I$(TEST)/inc
 TEST_LD = -L$(TEST) -ltest
 
-EGL = $(ROOT)/EGL
-EGL_LIB = $(EGL)/libEGL$(LIB_EXT)
-EGL_LD = -L$(EGL) -lEGL
-
 GLES = $(ROOT)/GLESv2
 GLES_LIB = $(GLES)/libGLESv2$(LIB_EXT)
 GLES_LD = -L$(GLES) -lGLESv2
+
+EGL = $(ROOT)/EGL
+EGL_LIB = $(EGL)/libEGL$(LIB_EXT)
+EGL_LD = -L$(EGL) -lEGL

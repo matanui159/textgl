@@ -1,8 +1,8 @@
 include_rules
 
 CC_FLAGS += $(UTIL_CC) -DTGL_EGL
-LD_FLAGS += $(UTIL_LD)
-LIBS += $(UTIL_LIB)
+LD_FLAGS += $(UTIL_LD) $(GLES_LD)
+LIBS += $(UTIL_LIB) $(GLES_LIB)
 
 : foreach *.c |> !CC |> {OBJ}
 : {OBJ} | $(LIBS) |> !LIB |>

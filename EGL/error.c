@@ -1,11 +1,13 @@
 #include "error.h"
 
-static __thread int g_error = EGL_SUCCESS;
+static int g_error = EGL_SUCCESS;
 
 void tglc_error_set(int error) {
 	g_error = error;
 }
 
-TGL_API int TGL_ENTRY eglGetError() {
-	return g_error;
+TGL_API EGLint TGL_ENTRY eglGetError() {
+	int result = g_error;
+	g_error = EGL_SUCCESS;
+	return result;
 }
