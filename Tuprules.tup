@@ -16,20 +16,20 @@ endif
 CC_FLAGS += -Wall -Wextra -Wpedantic
 CC_FLAGS += -std=c11
 
-ifeq ($(RELEASE),y)
+ifeq ($(DEBUG),y)
+	CC_FLAGS += -g
+else
 	CC_FLAGS += -O3
 	LD_FLAGS += -s
 	ifeq ($(NATIVE),win32)
 		LD_FLAGS += -static-libgcc
 		LD_FLAGS += -static-libstdc++
 	endif
-else
-	CC_FLAGS += -g
 endif
 
 !CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |> bin/%d/%B.o
 !AR = |> ^ AR %o^ gcc-ar rcs %o %f |> lib%d.a
-!LIB = |> ^ LIB %o^ g++ %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
-!BIN = |> ^ BIN %o^ g++ %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
+!LIB = |> ^ LD %o^ g++ %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
+!BIN = |> ^ LD %o^ g++ %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
 
 include tup/vars.tup

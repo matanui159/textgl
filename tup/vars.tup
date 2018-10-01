@@ -1,19 +1,17 @@
-ROOT = $(TUP_CWD)/..
-
-UTIL = $(ROOT)/util
+UTIL = $(TUP_CWD)/../util
 UTIL_LIB = $(UTIL)/libutil.a
 UTIL_CC = -I$(UTIL)/inc
 UTIL_LD = -L$(UTIL) -lutil
 
-TEST = $(ROOT)/test
+TEST = $(TUP_CWD)/../test
 TEST_LIB = $(TEST)/libtest.a
 TEST_CC = -I$(TEST)/inc
 TEST_LD = -L$(TEST) -ltest
 
-GLES = $(ROOT)/GLESv2
+GLES = $(TUP_CWD)/../GLESv2
 GLES_LIB = $(GLES)/libGLESv2$(LIB_EXT)
 GLES_LD = -L$(GLES) -lGLESv2
 
-EGL = $(ROOT)/EGL
+EGL = $(TUP_CWD)/../EGL
 EGL_LIB = $(EGL)/libEGL$(LIB_EXT)
 EGL_LD = -L$(EGL) -lEGL

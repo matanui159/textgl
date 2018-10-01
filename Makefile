@@ -1,20 +1,16 @@
-build:
-	echo RELEASE = $(RELEASE) > tup/make.tup
+debug:
+	echo DEBUG = y > tup/make.tup
 	tup $(TUP_FLAGS)
-	echo
+
+release:
+	echo DEBUG = n > tup/make.tup
+	tup $(TUP_FLAGS)
 
 clean:
 	git clean -fdX
 
-test: build
-	util/test/test
-	EGL/test/test
-
 verbose:
 	$(eval TUP_FLAGS += --verbose)
 
-release:
-	$(eval RELEASE = y)
-
-.PHONY: build clean test verbose release
-.SILENT: build clean test verbose release
+.PHONY: debug release clean verbose
+.SILENT: debug release clean verbose

@@ -1,6 +1,0 @@
-include_rules
-
-CC_FLAGS += $(TEST_CC)
-
-: foreach *.c |> !CC |> {OBJ}
-: {OBJ} |> !AR |>

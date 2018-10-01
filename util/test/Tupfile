@@ -1,8 +1,0 @@
-include_rules
-
-CC_FLAGS += $(TEST_CC) $(UTIL_CC)
-LD_FLAGS += $(TEST_LD) $(UTIL_LD)
-LIBS += $(TEST_LIB) $(UTIL_LIB)
-
-: foreach *.c |> !CC |> {OBJ}
-: {OBJ} | $(LIBS) |> !BIN |>
