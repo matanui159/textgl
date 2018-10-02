@@ -6,9 +6,9 @@ typedef struct tgl_context_t {
 	int x;
 } tgl_context_t;
 
+GL_APICALL void TGL_ENTRY tgl_context_create(tgl_context_t* context);
+GL_APICALL void TGL_ENTRY tgl_context_destroy(tgl_context_t* context);
 GL_APICALL void TGL_ENTRY tgl_context_set(tgl_context_t* context);
-GL_APICALL tgl_context_t* TGL_ENTRY tgl_context_get();
-
-#define TGLC tgl_context_get()
+GL_APICALL const uint8_t* TGL_ENTRY tgl_context_frame(int width, int height);
 
 #endif
