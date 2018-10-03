@@ -2,7 +2,7 @@
 #include "error.h"
 #include "display.h"
 
-static int g_config = 418; // I'm a teapot
+static int g_config = TGLC_CONFIG_ID;
 
 static bool config_match_exact(int attr, int config, int value) {
 	if (config == value) {
@@ -47,8 +47,8 @@ bool tglc_config_check(EGLConfig config) {
 	return true;
 }
 
-TGL_API EGLBoolean TGL_ENTRY eglGetConfigs(EGLDisplay edisplay, EGLConfig* configs, EGLint size, EGLint* ret_size) {
-	if (tglc_display_get(edisplay) == NULL) {
+TGL_API EGLBoolean TGL_ENTRY eglGetConfigs(EGLDisplay display, EGLConfig* configs, EGLint size, EGLint* ret_size) {
+	if (!tglc_display_check(display)) {
 		return false;
 	}
 	if (size < 0 || ret_size == NULL) {
@@ -67,8 +67,8 @@ TGL_API EGLBoolean TGL_ENTRY eglGetConfigs(EGLDisplay edisplay, EGLConfig* confi
 	return true;
 }
 
-TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay edisplay, const EGLint* attr, EGLConfig* configs, EGLint size, EGLint* ret_size) {
-	if (tglc_display_get(edisplay) == NULL) {
+TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const EGLint* attr, EGLConfig* configs, EGLint size, EGLint* ret_size) {
+	if (!tglc_display_check(display)) {
 		return false;
 	}
 	if (size < 0 || ret_size == NULL) {
@@ -103,12 +103,18 @@ TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay edisplay, const EGLint* 
 	}
 
 	bool all_match = true;
-	#define ATTR(name, match, def, config) \
-		if (!config_match_##match(name, config, config_##name)) { \
-			all_match = false; \
+	if (config_EGL_CONFIG_ID != EGL_DONT_CARE) {
+		if (config_EGL_CONFIG_ID != TGLC_CONFIG_ID) {
+			all_match = false;
 		}
-	#include "attr.h"
-	#undef ATTR
+	} else {
+		#define ATTR(name, match, def, config) \
+			if (!config_match_##match(name, config, config_##name)) { \
+				all_match = false; \
+			}
+		#include "attr.h"
+		#undef ATTR
+	}
 
 	if (all_match) {
 		if (size > 0) {
@@ -121,8 +127,8 @@ TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay edisplay, const EGLint* 
 	return true;
 }
 
-TGL_API EGLBoolean TGL_ENTRY eglGetConfigAttrib(EGLDisplay edisplay, EGLConfig config, EGLint attr, EGLint* value) {
-	if (tglc_display_get(edisplay) == NULL || !tglc_config_check(config)) {
+TGL_API EGLBoolean TGL_ENTRY eglGetConfigAttrib(EGLDisplay display, EGLConfig config, EGLint attr, EGLint* value) {
+	if (!tglc_display_check(display) || !tglc_config_check(config)) {
 		return false;
 	}
 	if (value == NULL) {

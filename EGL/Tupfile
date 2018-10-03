@@ -5,4 +5,5 @@ LD_FLAGS += $(UTIL_LD) $(GLES_LD)
 LIBS += $(UTIL_LIB) $(GLES_LIB)
 
 : foreach *.c |> !CC |> {OBJ}
+: native/$(NATIVE).c |> !CC |> {OBJ}
 : {OBJ} | $(LIBS) |> !LIB |>

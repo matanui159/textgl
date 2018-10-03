@@ -1,18 +1,19 @@
 #include "display.h"
 #include "error.h"
 
-static tglc_display_t g_display;
+static int g_display = 0;
+static bool g_init = false;
 
-tglc_display_t* tglc_display_get(EGLDisplay edisplay) {
-	if (edisplay != &g_display) {
+bool tglc_display_check(EGLDisplay display) {
+	if (display != &g_display) {
 		tglc_error_set(EGL_BAD_DISPLAY);
-		return NULL;
+		return false;
 	}
-	if (!g_display.init) {
+	if (!g_init) {
 		tglc_error_set(EGL_NOT_INITIALIZED);
-		return NULL;
+		return false;
 	}
-	return &g_display;
+	return true;
 }
 
 TGL_API EGLDisplay TGL_ENTRY eglGetDisplay(EGLNativeDisplayType display) {
@@ -23,15 +24,15 @@ TGL_API EGLDisplay TGL_ENTRY eglGetDisplay(EGLNativeDisplayType display) {
 	}
 }
 
-TGL_API EGLBoolean TGL_ENTRY eglInitialize(EGLDisplay edisplay, EGLint* major, EGLint* minor) {
-	if (edisplay != &g_display) {
+TGL_API EGLBoolean TGL_ENTRY eglInitialize(EGLDisplay display, EGLint* major, EGLint* minor) {
+	if (display != &g_display) {
 		tglc_error_set(EGL_BAD_DISPLAY);
 		return false;
 	}
 
-	if (!g_display.init) {
+	if (!g_init) {
 		// TODO: init everything
-		g_display.init = true;
+		g_init = true;
 	}
 
 	if (major != NULL) {
@@ -49,9 +50,9 @@ TGL_API EGLBoolean TGL_ENTRY eglTerminate(EGLDisplay edisplay) {
 		return false;
 	}
 
-	if (g_display.init) {
+	if (g_init) {
 		// TODO: exit everything
-		g_display.init = false;
+		g_init = false;
 	}
 	return true;
 }

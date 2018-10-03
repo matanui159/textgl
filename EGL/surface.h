@@ -1,7 +1,6 @@
 #ifndef TGLC_SURFACE_H_
 #define TGLC_SURFACE_H_
-#include "display.h"
-#include <ncurses/curses.h>
+#include "util.h"
 
 typedef struct tglc_surface_t {
 	bool window;
@@ -9,7 +8,7 @@ typedef struct tglc_surface_t {
 	int height;
 } tglc_surface_t;
 
-void tglc_surface_init(tglc_display_t* display);
-void tglc_surface_exit(tglc_display_t* display);
+void tglc_surface_init();
+void tglc_surface_exit();
 
 #endif

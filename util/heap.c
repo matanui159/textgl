@@ -69,7 +69,7 @@ void tgl_heap_destroy(tgl_heap_t* heap) {
 	tgl_heap_entry_t* entry = heap->entries;
 	while (entry != NULL) {
 		tgl_heap_entry_t* next = entry->next;
-		if (entry->created) {
+		if (entry->created && heap->destroy != NULL) {
 			heap->destroy(entry + 1);
 		}
 		tgl_mem_destroy(entry);
@@ -104,7 +104,7 @@ void tgl_heap_delete(tgl_heap_t* heap, int size, const unsigned* names) {
 			} else {
 				prev->next = entry->next;
 			}
-			if (entry->created) {
+			if (entry->created && heap->destroy != NULL) {
 				heap->destroy(entry + 1);
 			}
 			tgl_mem_destroy(entry);
@@ -119,7 +119,9 @@ void* tgl_heap_get(tgl_heap_t* heap, unsigned name) {
 
 	tgl_heap_entry_t* entry = heap_add(heap, name);
 	if (!entry->created) {
-		heap->create(entry + 1);
+		if (heap->create != NULL) {
+			heap->create(entry + 1);
+		}
 		entry->created = true;
 	}
 	return entry + 1;

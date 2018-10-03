@@ -2,9 +2,9 @@
 #	define ATTR(name, match, def, config)
 #	warning ATTR() undefined
 #endif
-#include "util.h"
+#include "config.h"
 
-ATTR(EGL_CONFIG_ID, exact, EGL_DONT_CARE, 418) // I'm a teapot
+ATTR(EGL_CONFIG_ID, exact, EGL_DONT_CARE, TGLC_CONFIG_ID)
 ATTR(EGL_COLOR_BUFFER_TYPE, exact, EGL_RGB_BUFFER, EGL_RGB_BUFFER)
 ATTR(EGL_BUFFER_SIZE, min, 0, 32)
 ATTR(EGL_RED_SIZE, min, 0, 8)
