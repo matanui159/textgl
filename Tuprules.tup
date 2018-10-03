@@ -14,7 +14,7 @@ ifeq ($(NATIVE),win32)
 endif
 
 CC_FLAGS += -Wall -Wextra -Wpedantic
-CC_FLAGS += -std=c11
+CC_FLAGS += -std=c99
 
 ifeq ($(DEBUG),y)
 	CC_FLAGS += -g
