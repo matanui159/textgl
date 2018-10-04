@@ -1,10 +1,6 @@
 #include "surface.h"
 #include "error.h"
-// #include "display.h"
-// #include "config.h"
 #include "native/native.h"
-
-// TODO: fix this shit up
 
 static tgl_heap_t g_surfaces;
 
@@ -17,11 +13,9 @@ void tglc_surface_exit() {
 }
 
 TGL_API EGLSurface TGL_ENTRY eglCreateWindowSurface(EGLDisplay display, EGLConfig config, EGLNativeWindowType window, const EGLint* attr) {
-	TGL_UNUSED(window);
-
-	if (!tglc_display_check(display) || !tglc_config_check(config)) {
-		return EGL_NO_SURFACE;
-	}
+	TGL_UNUSED(display);
+	TGL_UNUSED(config);
+	TGL_UNUSED(attr);
 
 	unsigned name;
 	tgl_heap_gen(&g_surfaces, 1, &name);
@@ -33,9 +27,7 @@ TGL_API EGLSurface TGL_ENTRY eglCreateWindowSurface(EGLDisplay display, EGLConfi
 }
 
 TGL_API EGLBoolean TGL_ENTRY eglDestroySurface(EGLDisplay display, EGLSurface egl_surface) {
-	if (!tglc_display_check(display)) {
-		return false;
-	}
+	TGL_UNUSED(display);
 	if (egl_surface == NULL) {
 		tglc_error_set(EGL_BAD_SURFACE);
 		return false;
@@ -47,9 +39,6 @@ TGL_API EGLBoolean TGL_ENTRY eglDestroySurface(EGLDisplay display, EGLSurface eg
 }
 
 TGL_API EGLBoolean TGL_ENTRY eglQuerySurface(EGLDisplay display, EGLSurface egl_surface, EGLint attr, EGLint* value) {
-	if (!tglc_display_check(display)) {
-		return false;
-	}
 	if (egl_surface == NULL) {
 		tglc_error_set(EGL_BAD_SURFACE);
 		return false;
@@ -59,7 +48,6 @@ TGL_API EGLBoolean TGL_ENTRY eglQuerySurface(EGLDisplay display, EGLSurface egl_
 		return false;
 	}
 
-	// TODO: figure out and implement ALL of these -_-
 	tglc_surface_t* surface = egl_surface;
 	switch (attr) {
 		case EGL_WIDTH:
@@ -69,23 +57,35 @@ TGL_API EGLBoolean TGL_ENTRY eglQuerySurface(EGLDisplay display, EGLSurface egl_
 			*value = surface->height;
 			break;
 		case EGL_CONFIG_ID:
-			*value = TGLC_CONFIG_ID;
+			eglGetConfigAttrib(display, NULL, EGL_CONFIG_ID, value);
 			break;
 		case EGL_HORIZONTAL_RESOLUTION:
 		case EGL_VERTICAL_RESOLUTION:
 		case EGL_PIXEL_ASPECT_RATIO:
 			*value = EGL_UNKNOWN;
 			break;
+		case EGL_RENDER_BUFFER:
+			*value = EGL_BACK_BUFFER;
+			break;
+		case EGL_SWAP_BEHAVIOR:
+			*value = EGL_BUFFER_PRESERVED;
+			break;
+		case EGL_MULTISAMPLE_RESOLVE:
+			*value = EGL_MULTISAMPLE_RESOLVE_DEFAULT;
+			break;
 		case EGL_LARGEST_PBUFFER:
 			*value = false;
 			break;
-		case EGL_MIPMAP_LEVEL:
-		case EGL_MIPMAP_TEXTURE:
-		case EGL_MULTISAMPLE_RESOLVE:
-		case EGL_RENDER_BUFFER:
-		case EGL_SWAP_BEHAVIOR:
-		case EGL_TEXTURE_FORMAT:
 		case EGL_TEXTURE_TARGET:
+			*value = EGL_NO_TEXTURE;
+			break;
+		case EGL_TEXTURE_FORMAT:
+			*value = EGL_NO_TEXTURE;
+			break;
+		case EGL_MIPMAP_TEXTURE:
+			*value = false;
+			break;
+		case EGL_MIPMAP_LEVEL:
 			*value = 0;
 			break;
 		default:
