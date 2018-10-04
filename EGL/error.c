@@ -7,7 +7,7 @@ void tglc_error_set(int error) {
 }
 
 TGL_API EGLint TGL_ENTRY eglGetError() {
-	int result = g_error;
+	int error = g_error;
 	g_error = EGL_SUCCESS;
-	return result;
+	return error;
 }

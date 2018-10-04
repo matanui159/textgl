@@ -1,15 +1,19 @@
-#include "util.h"
+#include "context.h"
+#include "error.h"
 
 static tgl_context_t* g_context = NULL;
 
+tgl_context_t* tgl_context_get() {
+	return g_context;
+}
+
 TGL_API void TGL_ENTRY tgl_context_create(tgl_context_t* context) {
-	// TODO: create context
-	context->x = 1;
+	context->error = GL_NO_ERROR;
 }
 
 TGL_API void TGL_ENTRY tgl_context_destroy(tgl_context_t* context) {
 	// TODO: destroy context
-	context->x = 0;
+	TGL_UNUSED(context);
 }
 
 TGL_API void TGL_ENTRY tgl_context_set(tgl_context_t* context, int width, int height) {

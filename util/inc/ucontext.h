@@ -1,9 +1,9 @@
-#ifndef TGL_CONTEXT_H_
-#define TGL_CONTEXT_H_
+#ifndef TGL_UCONTEXT_H_
+#define TGL_UCONTEXT_H_
 #include "util.h"
 
 typedef struct tgl_context_t {
-	int x;
+	unsigned error;
 } tgl_context_t;
 
 GL_APICALL void TGL_ENTRY tgl_context_create(tgl_context_t* context);
