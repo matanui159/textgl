@@ -6,6 +6,8 @@ typedef struct tglc_surface_t {
 	bool window;
 	int width;
 	int height;
+	int buffer;
+	int level;
 } tglc_surface_t;
 
 void tglc_surface_init();

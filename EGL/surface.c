@@ -1,8 +1,10 @@
 #include "surface.h"
 #include "error.h"
-#include "display.h"
-#include "config.h"
+// #include "display.h"
+// #include "config.h"
 #include "native/native.h"
+
+// TODO: fix this shit up
 
 static tgl_heap_t g_surfaces;
 
@@ -16,7 +18,6 @@ void tglc_surface_exit() {
 
 TGL_API EGLSurface TGL_ENTRY eglCreateWindowSurface(EGLDisplay display, EGLConfig config, EGLNativeWindowType window, const EGLint* attr) {
 	TGL_UNUSED(window);
-	TGL_UNUSED(attr);
 
 	if (!tglc_display_check(display) || !tglc_config_check(config)) {
 		return EGL_NO_SURFACE;
@@ -59,27 +60,37 @@ TGL_API EGLBoolean TGL_ENTRY eglQuerySurface(EGLDisplay display, EGLSurface egl_
 	}
 
 	// TODO: figure out and implement ALL of these -_-
-	// tglc_surface_t* surface = egl_surface;
-	// switch (attr) {
-	// 	case EGL_WIDTH:
-	// 		*value = surface->width;
-	// 	case EGL_HEIGHT:
-	// 		*value = surface->height;
-	// 	case EGL_CONFIG_ID:
-	// 		*value = TGLC_CONFIG_ID;
-	// 		break;
-	// 	case EGL_HORIZONTAL_RESOLUTION:
-	// 	case EGL_LARGEST_PBUFFER:
-	// 	case EGL_MIPMAP_LEVEL:
-	// 	case EGL_MIPMAP_TEXTURE:
-	// 	case EGL_MULTISAMPLE_RESOLVE:
-	// 	case EGL_PIXEL_ASPECT_RATIO:
-	// 	case EGL_RENDER_BUFFER:
-	// 	case EGL_SWAP_BEHAVIOR:
-	// 	case EGL_TEXTURE_FORMAT:
-	// 	case EGL_TEXTURE_TARGET:
-	// 	case EGL_VERTICAL_RESOLUTION:
-	// }
-	*value = 0;
+	tglc_surface_t* surface = egl_surface;
+	switch (attr) {
+		case EGL_WIDTH:
+			*value = surface->width;
+			break;
+		case EGL_HEIGHT:
+			*value = surface->height;
+			break;
+		case EGL_CONFIG_ID:
+			*value = TGLC_CONFIG_ID;
+			break;
+		case EGL_HORIZONTAL_RESOLUTION:
+		case EGL_VERTICAL_RESOLUTION:
+		case EGL_PIXEL_ASPECT_RATIO:
+			*value = EGL_UNKNOWN;
+			break;
+		case EGL_LARGEST_PBUFFER:
+			*value = false;
+			break;
+		case EGL_MIPMAP_LEVEL:
+		case EGL_MIPMAP_TEXTURE:
+		case EGL_MULTISAMPLE_RESOLVE:
+		case EGL_RENDER_BUFFER:
+		case EGL_SWAP_BEHAVIOR:
+		case EGL_TEXTURE_FORMAT:
+		case EGL_TEXTURE_TARGET:
+			*value = 0;
+			break;
+		default:
+			tglc_error_set(EGL_BAD_ATTRIBUTE);
+			return false;
+	}
 	return true;
 }
