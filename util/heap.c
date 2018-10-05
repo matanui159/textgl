@@ -127,7 +127,7 @@ void* tgl_heap_get(tgl_heap_t* heap, unsigned name) {
 	return entry + 1;
 }
 
-bool tgl_heap_is(tgl_heap_t* heap, GLuint name) {
+bool tgl_heap_is(tgl_heap_t* heap, unsigned name) {
 	tgl_heap_entry_t* entry = heap_get(heap, name, NULL);
 	if (entry != NULL && entry->created) {
 		return true;
@@ -136,7 +136,7 @@ bool tgl_heap_is(tgl_heap_t* heap, GLuint name) {
 	}
 }
 
-GLuint tgl_heap_name(tgl_heap_t* heap, void* obj) {
+unsigned tgl_heap_name(tgl_heap_t* heap, void* obj) {
 	TGL_UNUSED(heap);
 	if (obj == NULL) {
 		return 0;
@@ -144,4 +144,15 @@ GLuint tgl_heap_name(tgl_heap_t* heap, void* obj) {
 		tgl_heap_entry_t* entry = (tgl_heap_entry_t*)obj - 1;
 		return entry->name;
 	}
+}
+
+void* tgl_heap_add(tgl_heap_t* heap) {
+	unsigned name;
+	tgl_heap_gen(heap, 1, &name);
+	return tgl_heap_get(heap, name);
+}
+
+void tgl_heap_remove(tgl_heap_t* heap, void* obj) {
+	unsigned name = tgl_heap_name(heap, obj);
+	tgl_heap_delete(heap, 1, &name);
 }

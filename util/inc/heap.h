@@ -21,5 +21,7 @@ void tgl_heap_delete(tgl_heap_t* heap, int size, const unsigned* names);
 void* tgl_heap_get(tgl_heap_t* heap, unsigned name);
 bool tgl_heap_is(tgl_heap_t* heap, unsigned name);
 unsigned tgl_heap_name(tgl_heap_t* heap, void* obj);
+void* tgl_heap_add(tgl_heap_t* heap);
+void tgl_heap_remove(tgl_heap_t* heap, void* obj);
 
 #endif

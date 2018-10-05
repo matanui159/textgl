@@ -23,8 +23,8 @@
 	#define EGLAPI TGL_API
 #endif
 
-#include <GLES/gl.h>
 #include <EGL/egl.h>
+#include <GLES/gl.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -32,5 +32,5 @@
 
 #include "mem.h"
 #include "heap.h"
-#include "ucontext.h"
+#include "context.h"
 #endif
