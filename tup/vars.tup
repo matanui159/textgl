@@ -8,9 +8,9 @@ TEST_LIB = $(TEST)/libtest.a
 TEST_CC = -I$(TEST)/inc
 TEST_LD = -L$(TEST) -ltest
 
-GLES = $(TUP_CWD)/../GLESv2
-GLES_LIB = $(GLES)/libGLESv2$(LIB_EXT)
-GLES_LD = -L$(GLES) -lGLESv2
+GLES = $(TUP_CWD)/../GLES
+GLES_LIB = $(GLES)/libGLES$(LIB_EXT)
+GLES_LD = -L$(GLES) -lGLES
 
 EGL = $(TUP_CWD)/../EGL
 EGL_LIB = $(EGL)/libEGL$(LIB_EXT)

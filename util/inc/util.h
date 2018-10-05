@@ -16,14 +16,14 @@
 #define TGL_ENTRY KHRONOS_APIENTRY
 
 #ifdef TGL_GLES
-	#define GL_APICALL TGL_API
+	#define GL_API TGL_API
 #endif
 
 #ifdef TGL_EGL
 	#define EGLAPI TGL_API
 #endif
 
-#include <GLES2/gl2.h>
+#include <GLES/gl.h>
 #include <EGL/egl.h>
 #include <stdint.h>
 #include <stdbool.h>
