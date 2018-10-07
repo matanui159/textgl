@@ -80,18 +80,20 @@ TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const int* attr
 		int config_##name = def;
 	TGLC_ATTRIB_LIST(ATTRIB_VAR)
 
-	while (attrib[0] != EGL_NONE) {
-		switch (attrib[0]) {
-			#define ATTRIB_SET(name, match, def, config) \
-				case name: \
-					config_##name = attrib[1]; \
+	if (attrib != NULL) {
+		while (attrib[0] != EGL_NONE) {
+			switch (attrib[0]) {
+				#define ATTRIB_SET(name, match, def, config) \
+					case name: \
+						config_##name = attrib[1]; \
+						break;
+				TGLC_ATTRIB_LIST(ATTRIB_SET)
+				default:
+					tglc_error_set(EGL_BAD_ATTRIBUTE);
 					break;
-			TGLC_ATTRIB_LIST(ATTRIB_SET)
-			default:
-				tglc_error_set(EGL_BAD_ATTRIBUTE);
-				break;
+			}
+			attrib += 2;
 		}
-		attrib += 2;
 	}
 
 	bool all_match = true;

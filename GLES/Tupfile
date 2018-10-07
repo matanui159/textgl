@@ -5,4 +5,4 @@ LD_FLAGS += $(UTIL_LD)
 LIBS += $(UTIL_LIB)
 
 : foreach *.c |> !CC |> {OBJ}
-: {OBJ} | $(LIBS) |> !LIB |>
+: {OBJ} |> !LIB |>

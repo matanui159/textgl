@@ -18,11 +18,10 @@ bool tglc_display_check(EGLDisplay display) {
 }
 
 TGL_API EGLDisplay TGL_ENTRY eglGetDisplay(EGLNativeDisplayType display) {
-	if (display == EGL_DEFAULT_DISPLAY) {
-		return &g_display;
-	} else {
+	if (display != NULL) {
 		return NULL;
 	}
+	return &g_display;
 }
 
 TGL_API EGLBoolean TGL_ENTRY eglInitialize(EGLDisplay display, EGLint* major, EGLint* minor) {

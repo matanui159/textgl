@@ -1,0 +1,7 @@
+include_rules
+
+LD_FLAGS += $(GLES_LD) $(EGL_LD)
+LIBS += $(GLES_LIB) $(EGL_LIB)
+
+: foreach *.c |> !CC |> {OBJ}
+: foreach {OBJ} |> !BIN |> %B$(BIN_EXT)

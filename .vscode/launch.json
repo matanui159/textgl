@@ -5,26 +5,12 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "util",
+			"name": "triangle",
 			"type": "cppdbg",
 			"request": "launch",
 			"MIMode": "gdb",
 			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/util/test/test",
-			"cwd": "${workspaceFolder}",
-			"externalConsole": true,
-			"preLaunchTask": "make",
-			"windows": {
-				"miDebuggerPath": "gdb.exe"
-			}
-		},
-		{
-			"name": "EGL",
-			"type": "cppdbg",
-			"request": "launch",
-			"MIMode": "gdb",
-			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/EGL/test/test",
+			"program": "${workspaceRoot}/examples/triangle",
 			"cwd": "${workspaceFolder}",
 			"externalConsole": true,
 			"preLaunchTask": "make",

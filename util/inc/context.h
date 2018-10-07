@@ -3,17 +3,18 @@
 #include "util.h"
 
 typedef struct tglc_surface_t {
-	bool window;
 	int width;
 	int height;
-	uint32_t color;
-	uint16_t depth;
-	uint8_t stencil;
+	uint8_t* color;
+	uint16_t* depth;
+	uint8_t* stencil;
+
+	bool window;
+	bool largest;
 } tglc_surface_t;
 
 typedef struct tgl_context_t {
 	unsigned error;
-
 	tglc_surface_t* read;
 	tglc_surface_t* write;
 } tgl_context_t;

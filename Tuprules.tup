@@ -23,13 +23,12 @@ else
 	LD_FLAGS += -s
 	ifeq ($(NATIVE),win32)
 		LD_FLAGS += -static-libgcc
-		LD_FLAGS += -static-libstdc++
 	endif
 endif
 
 !CC = |> ^ CC %f^ gcc -c %f -o %o $(CC_FLAGS) |> bin/%d/%B.o
 !AR = |> ^ AR %o^ gcc-ar rcs %o %f |> lib%d.a
-!LIB = |> ^ LD %o^ g++ %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
-!BIN = |> ^ LD %o^ g++ %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
+!LIB = | $(LIBS) |> ^ LD %o^ gcc %f -o %o -shared $(LD_FLAGS) |> lib%d$(LIB_EXT)
+!BIN = | $(LIBS) |> ^ LD %o^ gcc %f -o %o $(LD_FLAGS) |> %d$(BIN_EXT)
 
 include tup/vars.tup
