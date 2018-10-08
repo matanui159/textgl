@@ -58,7 +58,7 @@ static GLuint* heap_gen(tgl_heap_t* heap, unsigned start, unsigned end, int* siz
 	return names;
 }
 
-void tgl_heap_create(tgl_heap_t* heap, int elem_size, tgl_heap_create_t create, tgl_heap_destroy_t destroy) {
+void tgl_heap_create(tgl_heap_t* heap, int elem_size, tgl_heap_callback_t create, tgl_heap_callback_t destroy) {
 	heap->entries = NULL;
 	heap->elem_size = elem_size;
 	heap->create = create;

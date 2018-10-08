@@ -63,7 +63,7 @@ TGL_API EGLBoolean TGL_ENTRY eglGetConfigs(EGLDisplay display, EGLConfig* config
 	return true;
 }
 
-TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const int* attrib, EGLConfig* configs, int size, int* ret_size) {
+TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const int* attribs, EGLConfig* configs, int size, int* ret_size) {
 	if (!tglc_display_check(display)) {
 		return false;
 	}
@@ -80,19 +80,19 @@ TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const int* attr
 		int config_##name = def;
 	TGLC_ATTRIB_LIST(ATTRIB_VAR)
 
-	if (attrib != NULL) {
-		while (attrib[0] != EGL_NONE) {
-			switch (attrib[0]) {
+	if (attribs != NULL) {
+		while (attribs[0] != EGL_NONE) {
+			switch (attribs[0]) {
 				#define ATTRIB_SET(name, match, def, config) \
 					case name: \
-						config_##name = attrib[1]; \
+						config_##name = attribs[1]; \
 						break;
 				TGLC_ATTRIB_LIST(ATTRIB_SET)
 				default:
 					tglc_error_set(EGL_BAD_ATTRIBUTE);
 					break;
 			}
-			attrib += 2;
+			attribs += 2;
 		}
 	}
 

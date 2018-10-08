@@ -3,7 +3,8 @@
 
 static tgl_context_t* g_context = NULL;
 
-TGL_API void TGL_ENTRY tgl_context_create(tgl_context_t* context) {
+TGL_API void TGL_ENTRY tgl_context_create(tgl_context_t* context, tgl_context_t* share) {
+	TGL_UNUSED(share);
 	tgl_misc_init(context);
 }
 
