@@ -1,5 +1,9 @@
 include_rules
 
+!LOCAL = |> ^ LOCAL %o^ cp %f %o |> %b
+: $(GLES_LIB) |> !LOCAL |>
+: $(EGL_LIB) |> !LOCAL |>
+
 LD_FLAGS += $(GLES_LD) $(EGL_LD)
 LIBS += $(GLES_LIB) $(EGL_LIB)
 

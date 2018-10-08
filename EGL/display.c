@@ -1,6 +1,7 @@
 #include "util.h"
 #include "error.h"
 #include "surface.h"
+#include "native/native.h"
 
 static int g_display = 0;
 static bool g_init = false;
@@ -31,6 +32,7 @@ TGL_API EGLBoolean TGL_ENTRY eglInitialize(EGLDisplay display, EGLint* major, EG
 	}
 
 	if (!g_init) {
+		tglc_native_init();
 		tglc_surface_init();
 		g_init = true;
 	}
@@ -51,6 +53,7 @@ TGL_API EGLBoolean TGL_ENTRY eglTerminate(EGLDisplay display) {
 	
 	if (g_init) {
 		tglc_surface_exit();
+		tglc_native_exit();
 		g_init = false;
 	}
 	return true;

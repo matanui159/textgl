@@ -10,8 +10,8 @@
 			"request": "launch",
 			"MIMode": "gdb",
 			"miDebuggerPath": "gdb",
-			"program": "${workspaceRoot}/examples/triangle",
-			"cwd": "${workspaceFolder}",
+			"program": "${workspaceRoot}/example/triangle",
+			"cwd": "${workspaceFolder}/example",
 			"externalConsole": true,
 			"preLaunchTask": "make",
 			"windows": {

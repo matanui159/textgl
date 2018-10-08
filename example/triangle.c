@@ -9,8 +9,9 @@ int main() {
 	eglChooseConfig(display, NULL, &config, 1, &count);
 	EGLSurface surface = eglCreateWindowSurface(display, config, NULL, NULL);
 
+	getchar();
+
 	eglDestroySurface(display, surface);
 	eglTerminate(display);
-	puts("TADA");
 	return 0;
 }

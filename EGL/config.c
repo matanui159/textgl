@@ -102,13 +102,6 @@ TGL_API EGLBoolean TGL_ENTRY eglChooseConfig(EGLDisplay display, const int* attr
 			all_match = false;
 		}
 	} else {
-		#define MATCH_IGNORE(value, config) true
-		#define MATCH_MIN(value, config) (value <= config)
-		#define MATCH_MASK(value, config) ((value & config) == value)
-		#define MATCH_EXACT(value, config) \
-			(value == EGL_DONT_CARE || value == config)
-		#define MATCH_LEVEL(value, config) (value == config)
-
 		#define ATTRIB_MATCH(name, match, def, config) \
 			if (!match_##match(config_##name, config)) { \
 				all_match = false; \
